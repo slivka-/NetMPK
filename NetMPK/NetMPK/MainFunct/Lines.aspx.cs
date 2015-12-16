@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,16 +12,30 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DatabaseConnection db = DatabaseConnection.getInstance();
-            db.OpenConnection();
-            List<string> values = db.GetLinesNumbers();
-            db.CloseConnection();
-
-            foreach (string s in values)
+            if (!IsPostBack)
             {
-                
-                mainContent.InnerHtml += "<a runat=\"server\" href=\"LineStops.aspx?linenumber="+s+"\" class=\"btn btn-default\">"+s+"</a>";
-                
+                DatabaseConnection db = DatabaseConnection.getInstance();
+                db.OpenConnection();
+                List<string> values = db.GetLinesNumbers();
+                db.CloseConnection();
+
+                foreach (string s in values)
+                {
+                    mainContent.InnerHtml += "<a runat=\"server\" href=\"LineStops.aspx?linenumber=" + s + "\" class=\"btn btn-default\">" + s + "</a>";
+                }
+            }
+        }
+
+        protected void lineSearchButton_Click(object sender, EventArgs e)
+        {
+            Regex reg = new Regex(@"[0-9]{2,3}");
+            if (reg.IsMatch(lineSearch.Text))
+            {
+                Response.Redirect("LineStops.aspx?linenumber=" + lineSearch.Text);
+            }
+            else
+            {
+                ErrorMessage.Text = "Wpisz poprawny numer linii";
             }
         }
     }

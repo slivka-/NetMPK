@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -13,15 +14,31 @@ namespace NetMPK.MainFunct
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DBConn = DatabaseConnection.getInstance();
-            DBConn.OpenConnection();
-            List<String> StopsList = DBConn.GetLinesStopNames();
-            DBConn.CloseConnection();
-            foreach (String StopName in StopsList)
+            if (!IsPostBack)
             {
-                mainContent.InnerHtml += " <a runat=\"server\" href=\"StopLines.aspx?stopname="+StopName+"\" class = \"btn btn-default\">" + StopName + "</a></br></br>";
+                DBConn = DatabaseConnection.getInstance();
+                DBConn.OpenConnection();
+                List<String> StopsList = DBConn.GetLinesStopNames();
+                DBConn.CloseConnection();
+                foreach (String StopName in StopsList)
+                {
+                    mainContent.InnerHtml += " <a runat=\"server\" href=\"StopLines.aspx?stopname=" + StopName + "\" class = \"btn btn-default\">" + StopName + "</a></br></br>";
+                }
             }
             
+        }
+
+        protected void stopSearchButton_Click(object sender, EventArgs e)
+        {
+            Regex reg = new Regex(@"[^0-9\:\;\'\{\}\[\]\<\>\?\/\\\+\=\)\(\*\&\^\%\$\#\@\!\~\`]+");
+            if (reg.IsMatch(stopSearch.Text))
+            {
+                Response.Redirect("StopLines.aspx?stopname=" + stopSearch.Text);
+            }
+            else
+            {
+                ErrorMessage.Text = "Wpisz poprawną nazwe przystanku";
+            }
         }
     }
 }
