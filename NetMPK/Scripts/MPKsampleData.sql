@@ -28,9 +28,12 @@ INSERT INTO LineStop (Id_stop, Name) VALUES
 INSERT INTO Connection(Id_route, From_stop_id, To_stop_id, Transfer_time) VALUES
 (1, 1, 2, '00:00:02'),
 (2, 2, 3, '00:00:02'),
-(3, 3, 4, '00:00:00');
+(3, 3, 4, '00:00:00'),
+(4, 4, 4, '00:00:00'),
+(5, 1, 1, '00:00:00');
 
-INSERT INTO LineRoute VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 1, 3);
+INSERT INTO LineRoute (Id_route, Id_line, Stop_number)VALUES
+(5, 1, 1), --Salwator - Salwator
+(2, 1, 2), -- Malczewskiego - Aleja
+(3, 1, 3), -- Aleja - Kopiec
+(4, 1, 4); -- Kopiec - Kopiec

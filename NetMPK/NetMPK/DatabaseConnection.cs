@@ -58,14 +58,21 @@ namespace NetMPK
         {
             List<String> values = new List<string>();
 
-            SqlCommand cmd = new SqlCommand(query, sqlConnection);
-
-            using (SqlDataReader rdr = cmd.ExecuteReader())
+            try
             {
-                while (rdr.Read())
+                SqlCommand cmd = new SqlCommand(query, sqlConnection);
+
+                using (SqlDataReader rdr = cmd.ExecuteReader())
                 {
-                    values.Add(Convert.ToString(rdr[columnName]));
+                    while (rdr.Read())
+                    {
+                        values.Add(Convert.ToString(rdr[columnName]));
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
 
             return values;
@@ -84,33 +91,11 @@ namespace NetMPK
         public List<String> GetStopsFromLine(int lineNumber)
         {
             String query = @"SELECT ls.Name FROM LineStop ls
-                            WHERE ls.Id_stop IN (
-	                            (SELECT c.From_stop_id
-	                            FROM Connection c
-	                            WHERE c.Id_route IN (
-			                            SELECT lr.Id_route
-			                            FROM LineRoute lr
-			                            WHERE Id_line IN (
-				                            SELECT l.Id_line
-				                            FROM Line l
-				                            WHERE Line_number = " + lineNumber + @"
-			                            )
-			
-		                            ))
-	                            UNION ALL
-	                            (SELECT c.To_stop_id
-	                            FROM Connection c
-	                            WHERE c.Id_route IN (
-			                            SELECT lr.Id_route
-			                            FROM LineRoute lr
-			                            WHERE Id_line IN (
-				                            SELECT l.Id_line
-				                            FROM Line l
-				                            WHERE Line_number =  " + lineNumber + @"
-			                            )
-			
-		                            ))
-	                            )";
+                            JOIN Connection c1 ON ls.Id_stop = c1.From_stop_id
+                            JOIN LineRoute lr1 ON lr1.Id_route = c1.Id_route
+                            JOIN Line l1 ON l1.Id_line = lr1.Id_line
+                            WHERE l1.Line_number = " + lineNumber + @"
+                            ORDER BY lr1.Stop_number;";
 
             return GetOneColumnData(query, "Name");
         }
