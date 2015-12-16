@@ -25,15 +25,15 @@ namespace NetMPK.Account
             
             try
             {
-                //string fileName = HttpContext.Current.Server.MapPath("kod.txt");
-                string serverSMTP = "poczta.interia.pl";
+                
+                string serverSMTP = "";
                 int portSMTP = 587;
                 SmtpClient smtp = new SmtpClient(serverSMTP, portSMTP);
-                string adres = "miho6@interia.pl";
+                string adres = "";
                 smtp.Credentials = new NetworkCredential(adres, "");
                 MailMessage mail = new MailMessage(adres, mailAdress);
                 mail.Subject = "TEST";
-                mail.Body = "TESTTTTTTT";
+                mail.Body = "TEST";
                 mail.IsBodyHtml = true;
                 smtp.Send(mail);
                 return true;

@@ -5,7 +5,7 @@
    <div class="jumbotron">
         <h1>Internetowy rozkład jazdy MPK</h1>
         <p class="lead">Wyszukuj trasy, linie i przystanki. Sprawdzaj rozkłady. Szybko i wygodnie!</p>
-        <p><a runat="server" href="~/Contact" class = "btn btn-primary btn-lg">Zarejestruj się »</a></p>
+        <p><a runat="server" href="~/Account/Register.aspx" class = "btn btn-primary btn-lg">Zarejestruj się »</a></p>
     </div>
 
     <div class="row">
