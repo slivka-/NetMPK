@@ -2,4 +2,5 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
+    <div ID="divTime" runat="server"/>
 </asp:Content>

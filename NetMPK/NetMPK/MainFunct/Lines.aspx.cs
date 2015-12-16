@@ -11,7 +11,17 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            DatabaseConnection db = DatabaseConnection.getInstance();
+            db.OpenConnection();
+            List<string> values = db.GetLinesNumbers();
+            db.CloseConnection();
 
+            foreach (string s in values)
+            {
+                
+                divTime.InnerHtml += "<a runat=\"server\" href=\"LineStops.aspx?linenumber="+s+"\" class=\"btn btn-default\">"+s+"</a>";
+                
+            }
         }
     }
 }

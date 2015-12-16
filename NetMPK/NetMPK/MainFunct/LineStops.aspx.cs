@@ -4,15 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 
 namespace NetMPK.MainFunct
 {
-    public partial class Timetables : System.Web.UI.Page
+    public partial class LineStops : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            l1.Text = Request.QueryString["linenumber"];
         }
     }
 }
