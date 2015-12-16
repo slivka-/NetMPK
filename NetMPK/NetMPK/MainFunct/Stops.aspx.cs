@@ -19,7 +19,7 @@ namespace NetMPK.MainFunct
             DBConn.CloseConnection();
             foreach (String StopName in StopsList)
             {
-                mainContent.InnerHtml += " <a runat=\"server\" href=\"~/MainFunct/Timetables\" class = \"btn btn-default\">" + StopName + "</a>";
+                mainContent.InnerHtml += " <a runat=\"server\" href=\"StopLines.aspx?stopname="+StopName+"\" class = \"btn btn-default\">" + StopName + "</a></br></br>";
             }
             
         }

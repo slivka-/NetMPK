@@ -169,6 +169,7 @@
     <Content Include="MainFunct\Lines.aspx" />
     <Content Include="MainFunct\LineStops.aspx" />
     <Content Include="MainFunct\Routes.aspx" />
+    <Content Include="MainFunct\StopLines.aspx" />
     <Content Include="MainFunct\Stops.aspx" />
     <Content Include="MainFunct\Timetables.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -274,6 +275,13 @@
     </Compile>
     <Compile Include="MainFunct\Routes.aspx.designer.cs">
       <DependentUpon>Routes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MainFunct\StopLines.aspx.cs">
+      <DependentUpon>StopLines.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainFunct\StopLines.aspx.designer.cs">
+      <DependentUpon>StopLines.aspx</DependentUpon>
     </Compile>
     <Compile Include="MainFunct\Stops.aspx.cs">
       <DependentUpon>Stops.aspx</DependentUpon>

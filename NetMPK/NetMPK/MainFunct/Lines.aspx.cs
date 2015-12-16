@@ -19,7 +19,7 @@ namespace NetMPK.MainFunct
             foreach (string s in values)
             {
                 
-                divTime.InnerHtml += "<a runat=\"server\" href=\"LineStops.aspx?linenumber="+s+"\" class=\"btn btn-default\">"+s+"</a>";
+                mainContent.InnerHtml += "<a runat=\"server\" href=\"LineStops.aspx?linenumber="+s+"\" class=\"btn btn-default\">"+s+"</a>";
                 
             }
         }

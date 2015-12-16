@@ -10,7 +10,7 @@
 namespace NetMPK.MainFunct {
     
     
-    public partial class LineStops {
+    public partial class StopLines {
         
         /// <summary>
         /// titleText control.
