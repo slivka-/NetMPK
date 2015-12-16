@@ -28,9 +28,9 @@ namespace NetMPK
         {
             try
             {
-                if (sqlConnection.State.ToString() != "Open")
+                sqlConnection = new SqlConnection(@WebConfigurationManager.ConnectionStrings[connection].ToString());
+                if (sqlConnection != null)
                 {
-                    sqlConnection = new SqlConnection(@WebConfigurationManager.ConnectionStrings[connection].ToString());
                     sqlConnection.Open();
                 }
                 return true;
@@ -78,7 +78,7 @@ namespace NetMPK
 
         public List<String> GetLinesStopNames()
         {
-            return GetOneColumnData("Select Name FROM Line", "Name");
+            return GetOneColumnData("Select Name FROM LineStop", "Name");
         }
 
     }
