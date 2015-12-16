@@ -11,5 +11,14 @@ namespace NetMPK.MainFunct {
     
     
     public partial class Stops {
+        
+        /// <summary>
+        /// mainContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mainContent;
     }
 }
