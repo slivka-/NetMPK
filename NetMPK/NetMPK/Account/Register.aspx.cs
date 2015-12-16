@@ -30,7 +30,7 @@ namespace NetMPK.Account
                 int portSMTP = 587;
                 SmtpClient smtp = new SmtpClient(serverSMTP, portSMTP);
                 string adres = "miho6@interia.pl";
-                smtp.Credentials = new NetworkCredential(adres, "T696270141$%");
+                smtp.Credentials = new NetworkCredential(adres, "");
                 MailMessage mail = new MailMessage(adres, mailAdress);
                 mail.Subject = "TEST";
                 mail.Body = "TESTTTTTTT";
