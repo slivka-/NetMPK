@@ -11,7 +11,18 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            titleText.InnerText += Request.QueryString["stopname"];
+            String stopname = Request.QueryString["stopname"];
+            titleText.InnerText += stopname;
+
+            DatabaseConnection db = DatabaseConnection.getInstance();
+            db.OpenConnection();
+            List<string> values = db.GetLinesFromStop(stopname);
+            db.CloseConnection();
+
+            foreach (string s in values)
+            {
+                mainContent.InnerHtml += "<a runat=\"server\" href=\"Timetables.aspx?linenumber=" + s + "&stopname="+stopname+"\" class=\"btn btn-default\">" + s + "</a>";
+            }
         }
     }
 }

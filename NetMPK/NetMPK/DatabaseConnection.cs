@@ -124,13 +124,14 @@ namespace NetMPK
                             WHERE c.From_stop_id IN (
 	                            SELECT ls.Id_stop
 	                            FROM LineStop ls
-	                            WHERE Name = " + stopName + @"
+	                            WHERE Name =  '" + stopName + @"'
+
                             )
                             OR
                             c.To_stop_id IN (
 	                            SELECT ls.Id_stop
 	                            FROM LineStop ls
-	                            WHERE Name = " + stopName + @"
+	                            WHERE Name =  '" + stopName + @"'
                             )";
             return GetOneColumnData(query, "Line_number");
         }
