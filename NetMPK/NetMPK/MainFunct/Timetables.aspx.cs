@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 
 namespace NetMPK.MainFunct
 {
@@ -15,10 +16,13 @@ namespace NetMPK.MainFunct
             db.OpenConnection();
             List<string> values = db.GetLinesNumbers();
             db.CloseConnection();
-
+            int index = 0;
             foreach (string s in values)
             {
-                timeTableTextBox.Text += s + "\n";
+                HtmlGenericControl newControl = new HtmlGenericControl("div");
+                newControl.ID = s + index++;
+                newControl.InnerHtml = @"<a runat=""server"" href=""~/MainFunc"" class=""btn btn-default"">" + s;
+                divTime.Controls.Add(newControl);
             }
         }
     }
