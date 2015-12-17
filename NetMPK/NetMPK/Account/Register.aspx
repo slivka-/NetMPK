@@ -2,6 +2,9 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2>Zarejestruj się</h2>
+    <p class="text-success">
+        <asp:Literal runat="server" ID="SuccessMessage" />
+    </p>
     <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" />
     </p>
@@ -9,18 +12,20 @@
     <div class="form-horizontal">
         <h4>Stwórz nowe konto</h4>
         <hr />
-        <asp:ValidationSummary runat="server" ID="LoginErr" CssClass="text-danger" />
+        <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Login" CssClass="col-md-2 control-label">Login</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Login" CssClass="form-control" />
+                <asp:Label runat="server" ID="LoginErr" CssClass="text-danger"/>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Login" CssClass="text-danger" ErrorMessage="Podanie Loginu jest wymagane" />
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" ID="EmailErr" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
+                <asp:Label runat="server" ID="EmailErr" CssClass="text-danger"/>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="Podanie adresu Email jest wymagane" />
             </div>
         </div>

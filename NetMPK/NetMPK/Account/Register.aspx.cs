@@ -17,10 +17,42 @@ namespace NetMPK.Account
         private String userLogin;
         private String userEmail;
         private String userPassword;
+        private Boolean canRegister;
+        private DatabaseConnection DBConnection;
 
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-           // sendMail(Email.Text);
+            canRegister = true;
+            userLogin = Login.Text;
+            userEmail = Email.Text;
+            userPassword = Password.Text;
+            DBConnection = DatabaseConnection.getInstance();
+            DBConnection.OpenConnection();
+            LoginErr.Text = "";
+            EmailErr.Text = "";
+            SuccessMessage.Text = "";
+
+            if (DBConnection.IsUsernameInDB(userLogin)) 
+            {
+                LoginErr.Text = "Nazwa użytkownika zajęta";
+                canRegister = false;
+            }
+            if (DBConnection.IsMailInDB(userEmail))
+            {
+                EmailErr.Text = "Jest już użytkownik z takim adresem";
+                canRegister = false;
+            }
+            if (canRegister)
+            {
+                User u = new NetMPK.User();
+                u.Username = userLogin;
+                u.Mail = userEmail;
+                u.Password = userPassword;
+                u.UserStatus = false;
+                DBConnection.SaveUser(u);
+                SuccessMessage.Text = "Dziękujemy za rejestracje";
+            }
+            DBConnection.CloseConnection();
         }
 
         /*

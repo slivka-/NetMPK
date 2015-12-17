@@ -13,6 +13,15 @@ namespace NetMPK.Account {
     public partial class Register {
         
         /// <summary>
+        /// SuccessMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal SuccessMessage;
+        
+        /// <summary>
         /// ErrorMessage control.
         /// </summary>
         /// <remarks>
@@ -20,15 +29,6 @@ namespace NetMPK.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ErrorMessage;
-        
-        /// <summary>
-        /// LoginErr control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary LoginErr;
         
         /// <summary>
         /// Login control.
@@ -40,13 +40,13 @@ namespace NetMPK.Account {
         protected global::System.Web.UI.WebControls.TextBox Login;
         
         /// <summary>
-        /// EmailErr control.
+        /// LoginErr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label EmailErr;
+        protected global::System.Web.UI.WebControls.Label LoginErr;
         
         /// <summary>
         /// Email control.
@@ -56,6 +56,15 @@ namespace NetMPK.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox Email;
+        
+        /// <summary>
+        /// EmailErr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label EmailErr;
         
         /// <summary>
         /// Password control.

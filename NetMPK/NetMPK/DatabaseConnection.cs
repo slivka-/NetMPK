@@ -141,10 +141,10 @@ namespace NetMPK
 
         public bool IsMailInDB(String mail)
         {
-            String query = @"SELECT Mail FROM USERS WHERE Mail = @mail;";
+            String query = @"SELECT COUNT(*) FROM USERS WHERE Mail = @mail;";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             cmd.Parameters.AddWithValue("@mail", mail);
-            int result = (int)cmd.ExecuteNonQuery();
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
             return result > 0;
         }
 
@@ -153,7 +153,7 @@ namespace NetMPK
             String query = @"SELECT COUNT(*) FROM USERS WHERE Username = @Username;";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             cmd.Parameters.AddWithValue("@Username", Username);
-            int result = (int)cmd.ExecuteNonQuery();
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
             return result > 0;
         }
     }
