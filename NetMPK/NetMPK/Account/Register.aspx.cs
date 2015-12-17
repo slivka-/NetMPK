@@ -14,6 +14,10 @@ namespace NetMPK.Account
     public partial class Register : Page
     {
 
+        private String userLogin;
+        private String userEmail;
+        private String userPassword;
+
         protected void CreateUser_Click(object sender, EventArgs e)
         {
            // sendMail(Email.Text);
