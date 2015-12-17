@@ -121,5 +121,53 @@ namespace NetMPK
             return GetOneColumnData(query, "Line_number");
         }
 
+        public void SaveUser(User user)
+        {
+            String query = @"SELECT MAX(Id_user) FROM USERS";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            int ID = 0;
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    ID = (Convert.ToInt32(rdr["Id_user"]));
+                }
+            }
+
+            query = @"INSERT INTO Users (Id_user, Username, Mail, User_password, User_status) VALUES
+            ("+ ID + @", '" + user.Username +@"', '" + user.Mail + @"', + " + user.Password + @"', "+ (user.UserStatus ? 1 : 0) +@" );";
+            cmd = new SqlCommand(query, sqlConnection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public bool IsMailInDB(String mail)
+        {
+            String query = @"SELECT Mail FROM USERS WHERE Mail = '" + mail + @"';";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            int result = cmd.ExecuteNonQuery();
+            if (result == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool IsUsernameInDB(String Username)
+        {
+            String query = @"SELECT Username FROM USERS WHERE Mail = '" + Username + @"';";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            int result = cmd.ExecuteNonQuery();
+            if (result == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
