@@ -130,7 +130,7 @@ namespace NetMPK
 
             if (o != DBNull.Value)
             {
-                ID = Convert.ToInt32(o);
+                ID = Convert.ToInt32(o) + 1;
             }
 
             query = @"INSERT INTO Users (Id_user, Username, Mail, User_password, User_status) VALUES
@@ -141,32 +141,20 @@ namespace NetMPK
 
         public bool IsMailInDB(String mail)
         {
-            String query = @"SELECT Mail FROM USERS WHERE Mail = '" + mail + @"';";
+            String query = @"SELECT Mail FROM USERS WHERE Mail = @mail;";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
-            int result = cmd.ExecuteNonQuery();
-            if (result == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            cmd.Parameters.AddWithValue("@mail", mail);
+            int result = (int)cmd.ExecuteNonQuery();
+            return result > 0;
         }
 
         public bool IsUsernameInDB(String Username)
         {
-            String query = @"SELECT Username FROM USERS WHERE Username = '" + Username + @"';";
+            String query = @"SELECT COUNT(*) FROM USERS WHERE Username = @Username;";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
-            int result = cmd.ExecuteNonQuery();
-            if (result == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            cmd.Parameters.AddWithValue("@Username", Username);
+            int result = (int)cmd.ExecuteNonQuery();
+            return result > 0;
         }
     }
 }
