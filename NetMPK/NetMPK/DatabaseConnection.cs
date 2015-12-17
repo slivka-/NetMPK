@@ -123,19 +123,18 @@ namespace NetMPK
 
         public void SaveUser(User user)
         {
-            String query = @"SELECT MAX(Id_user) FROM USERS";
+            String query = @"SELECT MAX(Id_user) Id FROM USERS";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             int ID = 0;
-            using (SqlDataReader rdr = cmd.ExecuteReader())
+            object o = cmd.ExecuteScalar();
+
+            if (o != DBNull.Value)
             {
-                while (rdr.Read())
-                {
-                    ID = (Convert.ToInt32(rdr["Id_user"]));
-                }
+                ID = Convert.ToInt32(o);
             }
 
             query = @"INSERT INTO Users (Id_user, Username, Mail, User_password, User_status) VALUES
-            ("+ ID + @", '" + user.Username +@"', '" + user.Mail + @"', + " + user.Password + @"', "+ (user.UserStatus ? 1 : 0) +@" );";
+            (" + ID + @", '" + user.Username + @"', '" + user.Mail + @"', '" + user.Password + @"', " + (user.UserStatus ? 1 : 0) + @" );";
             cmd = new SqlCommand(query, sqlConnection);
             cmd.ExecuteNonQuery();
         }
