@@ -157,7 +157,7 @@ namespace NetMPK
 
         public bool IsUsernameInDB(String Username)
         {
-            String query = @"SELECT Username FROM USERS WHERE Mail = '" + Username + @"';";
+            String query = @"SELECT Username FROM USERS WHERE Username = '" + Username + @"';";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             int result = cmd.ExecuteNonQuery();
             if (result == 0)
