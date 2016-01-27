@@ -92,7 +92,7 @@ namespace NetMPK
         {
             String query = @"SELECT ls.Name FROM LineStop ls
                             JOIN Connection c1 ON ls.Id_stop = c1.From_stop_id
-                            JOIN LineRoute lr1 ON lr1.Id_route = c1.Id_route
+                            JOIN LineConnection lr1 ON lr1.Id_route = c1.Id_route
                             JOIN Line l1 ON l1.Id_line = lr1.Id_line
                             WHERE l1.Line_number = " + lineNumber + @"
                             ORDER BY lr1.Stop_number;";
@@ -104,7 +104,7 @@ namespace NetMPK
         {
             String query = @"SELECT DISTINCT l.Line_number
                             FROM Line l
-                            JOIN LineRoute lr ON lr.Id_line = l.Id_line
+                            JOIN LineConnection lr ON lr.Id_line = l.Id_line
                             JOIN Connection c ON c.Id_route = lr.Id_route
                             WHERE c.From_stop_id IN (
 	                            SELECT ls.Id_stop

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StopLines.aspx.cs" Inherits="NetMPK.MainFunct.StopLines" %>
+﻿<%@ Page Title="Linie" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StopLines.aspx.cs" Inherits="NetMPK.MainFunct.StopLines" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
         var closing = true;

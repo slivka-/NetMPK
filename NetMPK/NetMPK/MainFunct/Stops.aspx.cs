@@ -47,7 +47,8 @@ namespace NetMPK.MainFunct
             Regex reg = new Regex(@"[^0-9\:\;\'\{\}\[\]\<\>\?\/\\\+\=\)\(\*\&\^\%\$\#\@\!\~\`]+");
             if (reg.IsMatch(stopSearch.Text))
             {
-                Response.Redirect("StopLines.aspx?stopname=" + stopSearch.Text);
+                
+                Response.Redirect("StopLines.aspx?stopname=" + StopsSearch.searchForStop(stopSearch.Text));
             }
             else
             {

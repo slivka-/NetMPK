@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Trasy" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmAccount.aspx.cs" Inherits="NetMPK.MainFunct.ConfirmAccount" %>
+﻿<%@ Page Title="Potwierdź konto" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ConfirmAccount.aspx.cs" Inherits="NetMPK.MainFunct.ConfirmAccount" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
