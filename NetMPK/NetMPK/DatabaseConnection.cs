@@ -5,6 +5,7 @@ using System.Web;
 using System.Configuration;
 using System.Web.Configuration;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace NetMPK
 {
@@ -155,6 +156,92 @@ namespace NetMPK
             cmd.Parameters.AddWithValue("@Username", Username);
             int result = Convert.ToInt32(cmd.ExecuteScalar());
             return result > 0;
+        }
+
+        public int GetStopCount()
+        {
+            OpenConnection();
+            String query = @"SELECT COUNT(*) FROM LineStop";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
+        }
+
+        public List<int> GetAllStopsID()
+        {
+            OpenConnection();
+            String query = @"SELECT Id_line FROM Line";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            List<int> items = new List<int>();
+
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    items.Add(Convert.ToInt32(rdr["Id_line"]));
+                }
+            }
+            CloseConnection();
+            return items;
+        }
+
+        public List<int> GetAllToStopID(int From_stop_id)
+        {
+            OpenConnection();
+            String query = @"SELECT To_stop_id FROM Connection WHERE From_stop_id = @From_stop_id 
+                            AND To_stop_id <> @From_stop_id";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@From_stop_id", From_stop_id);
+            List<int> items = new List<int>();
+
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    items.Add(Convert.ToInt32(rdr["To_stop_id"]));
+                }
+            }
+            CloseConnection();
+            return items;
+        }
+
+        public int GetTimeFromConnection(int id1, int id2)
+        {
+            OpenConnection();
+            String query = @"SELECT Transfer_time FROM Connection
+                            WHERE (From_stop_id = @id1 AND To_stop_id = @id2)
+                            OR (From_stop_id = @id2 AND To_stop_id = @id1);";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@id1", id1);
+            cmd.Parameters.AddWithValue("@id2", id2);
+            //DateTime result = Convert.ToDateTime(cmd.ExecuteScalar());
+            DateTime result = DateTime.ParseExact(cmd.ExecuteScalar().ToString(),
+                "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            CloseConnection();
+            return result.Minute;
+        }
+
+        public string GetStopNameFromID(int id)
+        {
+            OpenConnection();
+            String query = @"SELECT Name FROM LineStop WHERE Id_stop = @id";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@id", id);
+            string result = Convert.ToString(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
+        }
+
+        public int GetIDFromStopName(string name)
+        {
+            OpenConnection();
+            String query = @"SELECT Id_stop FROM LineStop WHERE name = @name";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@name", name);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
         }
     }
 }
