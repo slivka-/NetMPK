@@ -155,8 +155,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Account\ConfirmAccount.aspx" />
     <Content Include="Account\LoginSite.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="Account\BLANK.aspx" />
+    <Content Include="Account\UserSite.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
@@ -219,6 +222,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\ConfirmAccount.aspx.cs">
+      <DependentUpon>ConfirmAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\ConfirmAccount.aspx.designer.cs">
+      <DependentUpon>ConfirmAccount.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\LoginSite.aspx.cs">
       <DependentUpon>LoginSite.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -232,6 +242,20 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\BLANK.aspx.cs">
+      <DependentUpon>BLANK.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\BLANK.aspx.designer.cs">
+      <DependentUpon>BLANK.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\UserSite.aspx.cs">
+      <DependentUpon>UserSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\UserSite.aspx.designer.cs">
+      <DependentUpon>UserSite.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">

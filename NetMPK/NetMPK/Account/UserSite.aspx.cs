@@ -7,15 +7,17 @@ using System.Web.UI.WebControls;
 
 namespace NetMPK.MainFunct
 {
-    public partial class Routes : System.Web.UI.Page
+    public partial class UserSite : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
+            NetMPKGlobalVariables userInfo = NetMPKGlobalVariables.getInstance();
+            if (userInfo.isUserLoggedIn)
             {
-                if (NetMPKGlobalVariables.getInstance().userVerified)
+                
+                if (userInfo.userVerified)
                 {
-                    //KOD
+                    wLabel.Text = "Witaj " + userInfo.loggedInUserName;
                 }
                 else
                 {

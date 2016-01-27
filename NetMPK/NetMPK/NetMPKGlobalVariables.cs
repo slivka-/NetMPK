@@ -10,10 +10,14 @@ namespace NetMPK
         private static NetMPKGlobalVariables instance;
 
         public bool isUserLoggedIn { get; set; }
+        public string loggedInUserName { get; set; }
+        public bool userVerified { get; set; }
 
         private NetMPKGlobalVariables()
         {
             isUserLoggedIn = false;
+            loggedInUserName = "";
+            userVerified = false;
         }
 
         public static NetMPKGlobalVariables getInstance()

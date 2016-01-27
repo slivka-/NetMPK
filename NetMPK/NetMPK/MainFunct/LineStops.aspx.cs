@@ -13,37 +13,44 @@ namespace NetMPK.MainFunct
         {
             if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
             {
-                String linenumber = Request.QueryString["linenumber"];
-                titleText.InnerText += linenumber;
-
-                DatabaseConnection db = DatabaseConnection.getInstance();
-                db.OpenConnection();
-                try
+                if (NetMPKGlobalVariables.getInstance().userVerified)
                 {
-                    List<string> values = db.GetStopsFromLine(Convert.ToInt32(linenumber));
-                    db.CloseConnection();
-                    if (values.Count == 0)
+                    String linenumber = Request.QueryString["linenumber"];
+                    titleText.InnerText += linenumber;
+
+                    DatabaseConnection db = DatabaseConnection.getInstance();
+                    db.OpenConnection();
+                    try
                     {
-                        mainContent.InnerHtml += "<h3>Nie ma takiej linii</h3>";
-                    }
-                    else
-                    {
-                        foreach (string s in values)
+                        List<string> values = db.GetStopsFromLine(Convert.ToInt32(linenumber));
+                        db.CloseConnection();
+                        if (values.Count == 0)
                         {
-                            mainContent.InnerHtml += "<a runat=\"server\" href=\"Timetables.aspx?linenumber=" + linenumber + "&stopname=" + s + "\" class=\"btn btn-default\">" + s + "</a>";
+                            mainContent.InnerHtml += "<h3>Nie ma takiej linii</h3>";
+                        }
+                        else
+                        {
+                            foreach (string s in values)
+                            {
+                                mainContent.InnerHtml += "<a runat=\"server\" href=\"Timetables.aspx?linenumber=" + linenumber + "&stopname=" + s + "\" class=\"btn btn-default\">" + s + "</a>";
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        mainContent.InnerHtml += "<h3>Nie ma takiej linii</h3>";
+                        db.CloseConnection();
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    mainContent.InnerHtml += "<h3>Nie ma takiej linii</h3>";
-                    db.CloseConnection();
+                    Response.Redirect("~/Account/ConfirmAccount.aspx");
                 }
 
             }
             else
             {
-                Response.Redirect("NotLoggedIn");
+                Response.Redirect("~/MainFunct/NotLoggedIn.aspx");
             }
 
         }

@@ -14,11 +14,18 @@ namespace NetMPK.MainFunct
         {
             if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
             {
-                //TU KOD STRONY
+                if (NetMPKGlobalVariables.getInstance().userVerified)
+                {
+                    //KOD
+                }
+                else
+                {
+                    Response.Redirect("~/Account/ConfirmAccount.aspx");
+                }
             }
             else
             {
-                Response.Redirect("NotLoggedIn");
+                Response.Redirect("~/MainFunct/NotLoggedIn.aspx");
             }
         }
     }

@@ -16,21 +16,28 @@ namespace NetMPK.MainFunct
         {
             if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
             {
-                if (!IsPostBack)
+                if (NetMPKGlobalVariables.getInstance().userVerified)
                 {
-                    DBConn = DatabaseConnection.getInstance();
-                    DBConn.OpenConnection();
-                    List<String> StopsList = DBConn.GetLinesStopNames();
-                    DBConn.CloseConnection();
-                    foreach (String StopName in StopsList)
+                    if (!IsPostBack)
                     {
-                        mainContent.InnerHtml += " <a runat=\"server\" href=\"StopLines.aspx?stopname=" + StopName + "\" class = \"btn btn-default\">" + StopName + "</a></br></br>";
+                        DBConn = DatabaseConnection.getInstance();
+                        DBConn.OpenConnection();
+                        List<String> StopsList = DBConn.GetLinesStopNames();
+                        DBConn.CloseConnection();
+                        foreach (String StopName in StopsList)
+                        {
+                            mainContent.InnerHtml += " <a runat=\"server\" href=\"StopLines.aspx?stopname=" + StopName + "\" class = \"btn btn-default\">" + StopName + "</a></br></br>";
+                        }
                     }
+                }
+                else
+                {
+                    Response.Redirect("~/Account/ConfirmAccount.aspx");
                 }
             }
             else
             {
-                Response.Redirect("NotLoggedIn");
+                Response.Redirect("~/MainFunct/NotLoggedIn.aspx");
             }
 
         }

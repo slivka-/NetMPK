@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace NetMPK.MainFunct
 {
-    public partial class Routes : System.Web.UI.Page
+    public partial class BLANK : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +24,7 @@ namespace NetMPK.MainFunct
             }
             else
             {
-                Response.Redirect("~/MainFunct/NotLoggedIn.aspx");
+                Response.Redirect("NotLoggedIn");
             }
         }
     }

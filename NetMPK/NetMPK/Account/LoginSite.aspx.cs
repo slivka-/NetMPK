@@ -15,14 +15,11 @@ namespace NetMPK.Account
     {
 
         private String userLogin;
-        private String userEmail;
         private String userPassword;
-        private Boolean canRegister;
         private DatabaseConnection DBConnection;
 
         protected void LoginUser_Click(object sender, EventArgs e)
         {
-            bool canLogin = true;
             userLogin = Login.Text;
             userPassword = Password.Text;
             DBConnection = DatabaseConnection.getInstance();
@@ -30,16 +27,31 @@ namespace NetMPK.Account
             LoginErr.Text = "";
             SuccessMessage.Text = "";
 
-            if (DBConnection.IsUsernameInDB(userLogin)) 
+            if (DBConnection.IsUsernameInDB(userLogin))
             {
-                LoginErr.Text = "Znaleziono uzytkownika";
-                canLogin = false;
+                if (DBConnection.getUsersPassword(userLogin).Equals(userPassword))
+                {
+                    NetMPKGlobalVariables n = NetMPKGlobalVariables.getInstance();
+                    n.isUserLoggedIn = true;
+                    n.loggedInUserName = userLogin;
+                    int vStatus = DBConnection.getUserStatus(userLogin);
+                    if (vStatus != 0)
+                    {
+                        n.userVerified = true;
+                    }
+                    Response.Redirect("UserSite.aspx");
+                }
+                else
+                {
+                    LoginErr.Text = "Błędne hasło!";
+                }
+            }
+            else
+            {
+                LoginErr.Text = "Nie ma takiego użytkownika!";
             }
 
-            if (canLogin)
-            {
-                
-            }
+            
             DBConnection.CloseConnection();
         }
 

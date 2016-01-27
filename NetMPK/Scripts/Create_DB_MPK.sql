@@ -44,7 +44,8 @@ CREATE TABLE [Users] (
 	Username varchar(25) NOT NULL,
 	Mail varchar(40) NOT NULL,
 	User_password varchar(12) NOT NULL,
-	User_status BIT NOT NULL,
+	User_status INT NOT NULL,
+	Verification_Code INT NOT NULL,
 	CONSTRAINT pk_Id_user PRIMARY KEY (Id_user)
   )
 GO

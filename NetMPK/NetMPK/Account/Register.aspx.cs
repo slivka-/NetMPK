@@ -54,10 +54,10 @@ namespace NetMPK.Account
                 u.Username = userLogin;
                 u.Mail = userEmail;
                 u.Password = userPassword;
-                u.UserStatus = false;
+                u.UserStatus = 0;
                 u.VerificationCode = verificationCode;
                 DBConnection.SaveUser(u);
-                if (sendMail(u.Mail))
+                if (sendMail(u.Mail,u.VerificationCode))
                 {
                     SuccessMessage.Text = "Dziękujemy za rejestracje. Wiadomość potwierdzająca została wysłana na podany e-mail.";
                 }
@@ -70,7 +70,7 @@ namespace NetMPK.Account
             DBConnection.CloseConnection();
         }
 
-        private bool sendMail(string mailAddress)
+        private bool sendMail(string mailAddress, int code)
         {
             try
             { 
@@ -78,7 +78,8 @@ namespace NetMPK.Account
                 message.From = new MailAddress("netmpk.mailer@gmail.com", "NetMPK");
                 message.To.Add(new MailAddress(mailAddress));
                 message.Subject = "Weryfikacja rejestracji";
-                message.Body = "TEST";
+                message.Body = "Dziękujemy za rejestracje w naszym serwisie.<br/> Twój kod aktywujący to: "+code;
+                message.IsBodyHtml = true;
 
                 NetworkCredential cred = new NetworkCredential("netmpk.mailer@gmail.com", "cde3$RFV");
                 SmtpClient mailer = new SmtpClient();

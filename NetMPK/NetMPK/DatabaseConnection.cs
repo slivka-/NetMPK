@@ -134,7 +134,7 @@ namespace NetMPK
             }
 
             query = @"INSERT INTO Users (Id_user, Username, Mail, User_password, User_status, Verification_Code) VALUES
-            (" + ID + @", '" + user.Username + @"', '" + user.Mail + @"', '" + user.Password + @"', " + (user.UserStatus ? 1 : 0) + @", " + user.VerificationCode + @" );";
+            (" + ID + @", '" + user.Username + @"', '" + user.Mail + @"', '" + user.Password + @"', " + user.UserStatus + @", " + user.VerificationCode + @" );";
             cmd = new SqlCommand(query, sqlConnection);
             cmd.ExecuteNonQuery();
         }
@@ -165,5 +165,42 @@ namespace NetMPK
             int result = Convert.ToInt32(cmd.ExecuteScalar());
             return result > 0;
         }
+
+        public String getUsersPassword(String Username)
+        {
+            String query = @"SELECT User_password FROM USERS WHERE Username = '"+Username+@"';";
+            List<String> res = GetOneColumnData(query, "User_password");
+            return res[0];
+        }
+
+        public int getUserStatus(String Username)
+        {
+            String query = @"SELECT User_status FROM USERS WHERE Username = '" + Username + @"';";
+            List<String> res = GetOneColumnData(query, "User_status");
+            return int.Parse(res[0]);
+        }
+
+        public int getUserVerificationCode(String Username)
+        {
+            String query = @"SELECT Verification_Code FROM USERS WHERE Username = '" + Username + @"';";
+            List<String> res = GetOneColumnData(query, "Verification_Code");
+            return int.Parse(res[0]);
+        }
+
+        public String getUserEmail(String Username)
+        {
+            String query = @"SELECT Mail FROM USERS WHERE Username = '" + Username + @"';";
+            List<String> res = GetOneColumnData(query, "Mail");
+            return res[0];
+        }
+
+        public void confirmUser(String Username)
+        {
+            String query = @"UPDATE USERS SET User_status = 1 WHERE Username = '" + Username + @"';";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.ExecuteNonQuery();
+        }
+
+
     }
 }
