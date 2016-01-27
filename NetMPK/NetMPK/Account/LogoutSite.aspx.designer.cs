@@ -10,6 +10,6 @@
 namespace NetMPK.MainFunct {
     
     
-    public partial class BLANK {
+    public partial class LogoutSite {
     }
 }

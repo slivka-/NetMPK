@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Account\LogoutSite.aspx" />
     <Content Include="Account\ConfirmAccount.aspx" />
     <Content Include="Account\LoginSite.aspx" />
     <Content Include="Account\Register.aspx" />
@@ -168,6 +169,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="MainFunct\PageClosed.aspx" />
     <Content Include="MainFunct\NotLoggedIn.aspx" />
     <Content Include="MainFunct\Lines.aspx" />
     <Content Include="MainFunct\LineStops.aspx" />
@@ -222,6 +224,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\LogoutSite.aspx.cs">
+      <DependentUpon>LogoutSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\LogoutSite.aspx.designer.cs">
+      <DependentUpon>LogoutSite.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\ConfirmAccount.aspx.cs">
       <DependentUpon>ConfirmAccount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -278,6 +287,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MainFunct\PageClosed.aspx.cs">
+      <DependentUpon>PageClosed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainFunct\PageClosed.aspx.designer.cs">
+      <DependentUpon>PageClosed.aspx</DependentUpon>
     </Compile>
     <Compile Include="MainFunct\NotLoggedIn.aspx.cs">
       <DependentUpon>NotLoggedIn.aspx</DependentUpon>

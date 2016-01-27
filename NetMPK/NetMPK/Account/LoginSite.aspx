@@ -1,6 +1,17 @@
 ﻿<%@ Page Title="Logowanie" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="LoginSite.aspx.cs" Inherits="NetMPK.Account.LoginSite" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <script type="text/javascript">
+        var closing = true;
+        $(function () {
+            $("a,input[type=submit]").click(function () { closing = false; });
+            $(window).unload(function () {
+                if (closing) {
+                    jQuery.ajax({ url: "http://localhost:54369/MainFunct/PageClosed.aspx", async: false });
+                }
+            });
+        });
+    </script>
     <h2>Zaloguj się</h2>
     <p class="text-success">
         <asp:Literal runat="server" ID="SuccessMessage" />

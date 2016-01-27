@@ -15,6 +15,8 @@ namespace NetMPK
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+        public bool isLoggedIn = false;
+        public String loggedUserName = "";
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -69,7 +71,9 @@ namespace NetMPK
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+             NetMPKGlobalVariables n = NetMPKGlobalVariables.getInstance();
+            isLoggedIn = n.isUserLoggedIn;
+            loggedUserName = n.loggedInUserName;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

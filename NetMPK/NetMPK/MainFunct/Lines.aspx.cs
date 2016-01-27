@@ -12,6 +12,7 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
             {
                 if (NetMPKGlobalVariables.getInstance().userVerified)

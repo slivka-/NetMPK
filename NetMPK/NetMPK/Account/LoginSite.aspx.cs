@@ -39,7 +39,9 @@ namespace NetMPK.Account
                     {
                         n.userVerified = true;
                     }
+                    
                     Response.Redirect("UserSite.aspx");
+                    
                 }
                 else
                 {

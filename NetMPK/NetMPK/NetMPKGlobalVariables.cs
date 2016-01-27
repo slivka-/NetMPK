@@ -29,5 +29,9 @@ namespace NetMPK
             return instance;
         }
 
+        public static void unload()
+        {
+            instance = null;
+        }
     }
 }
