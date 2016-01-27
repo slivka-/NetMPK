@@ -4,19 +4,19 @@ USE MPK
 GO
 --Timetable data
 
-CREATE TABLE [dbo].[Line] (
+CREATE TABLE [Line] (
 	Id_line INT NOT NULL,
 	Line_number INT NOT NULL,
 	CONSTRAINT pk_Id_line PRIMARY KEY (Id_line)
   )
 GO
-CREATE TABLE [dbo].[LineConnection] (
+CREATE TABLE [LineConnection] (
 	Id_route INT NOT NULL,
 	Id_line INT NOT NULL,
 	Stop_number INT NOT NULL
   )
 GO
-CREATE TABLE [dbo].[Connection] (
+CREATE TABLE [Connection] (
 	Id_route INT NOT NULL,
 	From_stop_id INT NOT NULL,
 	To_stop_id INT NOT NULL,
@@ -24,14 +24,14 @@ CREATE TABLE [dbo].[Connection] (
 	CONSTRAINT pk_Id_route PRIMARY KEY (Id_route)
    )
 GO
-CREATE TABLE [dbo].[LineStop] (
+CREATE TABLE [LineStop] (
 	Id_stop INT NOT NULL,
 	Name VARCHAR(30) NOT NULL,
 	CONSTRAINT pk_Id_stop PRIMARY KEY (Id_stop)
    )
 GO
 --w (weekday), s (saturday), h (holiday)- Dayweek
-CREATE TABLE [dbo].[LineDetails] (
+CREATE TABLE [LineDetails] (
 	Line_number INT NOT NULL,
 	Starting_time time(7) NOT NULL,
 	DayWeek varchar(1) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE [dbo].[LineDetails] (
   )
 
 GO
-CREATE TABLE [dbo].[Users] (
+CREATE TABLE [Users] (
 	Id_user INT NOT NULL,
 	Username varchar(25) NOT NULL,
 	Mail varchar(40) NOT NULL,
@@ -48,23 +48,23 @@ CREATE TABLE [dbo].[Users] (
 	CONSTRAINT pk_Id_user PRIMARY KEY (Id_user)
   )
 GO
-CREATE TABLE [dbo].[UserTicket] (
+CREATE TABLE [UserTicket] (
 	Id_user INT NOT NULL,
 	Line_number INT NOT NULL
   )
 GO
-CREATE TABLE [dbo].[UserStatistics] (
+CREATE TABLE [UserStatistics] (
 	Id_user INT NOT NULL,
 	Avg_time time(7) NULL,
 	Fav_line INT NULL
   )
 GO
-CREATE TABLE [dbo].[UserTracks] (
+CREATE TABLE [UserTracks] (
 	Id_user INT NOT NULL,
 	Id_track INT NOT NULL
   )
 GO
-CREATE TABLE [dbo].[Track] (
+CREATE TABLE [Track] (
 	Id_track INT NOT NULL,
 	Id_start INT NOT NULL,
 	Id_end INT NOT NULL,
@@ -73,29 +73,29 @@ CREATE TABLE [dbo].[Track] (
 GO
 USE MPK
 GO
-ALTER TABLE [dbo].[LineConnection] 
-	ADD CONSTRAINT fk_Id_route FOREIGN KEY(Id_route) REFERENCES [dbo].[Connection](Id_route),
-	CONSTRAINT fk_Id_line FOREIGN KEY(Id_line) REFERENCES [dbo].[Line](Id_line)
+ALTER TABLE [LineConnection] 
+	ADD CONSTRAINT fk_Id_route FOREIGN KEY(Id_route) REFERENCES [Connection](Id_route),
+	CONSTRAINT fk_Id_line FOREIGN KEY(Id_line) REFERENCES [Line](Id_line)
 GO
-ALTER TABLE [dbo].[Connection]
-	ADD CONSTRAINT fk_From_stop_id FOREIGN KEY (From_stop_id) REFERENCES [dbo].[LineStop](Id_stop),
-	CONSTRAINT fk_To_stop_id FOREIGN KEY (To_stop_id) REFERENCES [dbo].[LineStop](Id_stop)
+ALTER TABLE [Connection]
+	ADD CONSTRAINT fk_From_stop_id FOREIGN KEY (From_stop_id) REFERENCES [LineStop](Id_stop),
+	CONSTRAINT fk_To_stop_id FOREIGN KEY (To_stop_id) REFERENCES [LineStop](Id_stop)
 GO
-ALTER TABLE [dbo].[UserTicket]
-	ADD CONSTRAINT fk_UserTicket_Id_user FOREIGN KEY(Id_user) REFERENCES [dbo].[Users](Id_user)
+ALTER TABLE [UserTicket]
+	ADD CONSTRAINT fk_UserTicket_Id_user FOREIGN KEY(Id_user) REFERENCES [Users](Id_user)
 GO
-ALTER TABLE [dbo].[UserStatistics]
-	ADD CONSTRAINT fk_UserStatistics_Id_user FOREIGN KEY(Id_user) REFERENCES [dbo].[Users](Id_user)
+ALTER TABLE [UserStatistics]
+	ADD CONSTRAINT fk_UserStatistics_Id_user FOREIGN KEY(Id_user) REFERENCES [Users](Id_user)
 GO
-ALTER TABLE [dbo].[UserTracks]
-	ADD CONSTRAINT fk_UserTracks_Id_user FOREIGN KEY(Id_user) REFERENCES [dbo].[Users](Id_user),
-	CONSTRAINT fk_UserTracks_Id_track FOREIGN KEY(Id_track) REFERENCES [dbo].[Track](Id_track)
+ALTER TABLE [UserTracks]
+	ADD CONSTRAINT fk_UserTracks_Id_user FOREIGN KEY(Id_user) REFERENCES [Users](Id_user),
+	CONSTRAINT fk_UserTracks_Id_track FOREIGN KEY(Id_track) REFERENCES [Track](Id_track)
 GO
-ALTER TABLE [dbo].[Track]
-	ADD CONSTRAINT fk_Track_Id_start FOREIGN KEY (Id_start) REFERENCES [dbo].[LineStop](Id_stop),
-	CONSTRAINT fk_Track_Id_stop FOREIGN KEY (Id_end) REFERENCES [dbo].[LineStop](Id_stop)
+ALTER TABLE [Track]
+	ADD CONSTRAINT fk_Track_Id_start FOREIGN KEY (Id_start) REFERENCES [LineStop](Id_stop),
+	CONSTRAINT fk_Track_Id_stop FOREIGN KEY (Id_end) REFERENCES [LineStop](Id_stop)
 GO
-CREATE INDEX stop_number_index ON [MPK].[dbo].[LineConnection] (Stop_number)
+CREATE INDEX stop_number_index ON [LineConnection] (Stop_number)
 GO
 CREATE PROCEDURE CZAS_DO_PRZYSTANKU @NAZWA_P varchar(30), @LINIA INT, @START_TIME time(7)
 AS
