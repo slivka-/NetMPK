@@ -243,5 +243,16 @@ namespace NetMPK
             CloseConnection();
             return result;
         }
+
+        public bool CheckIfExists(string value)
+        {
+            OpenConnection();
+            String query = @"SELECT COUNT(*) FROM LineStop WHERE Name = @value";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@value", value);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result > 0;
+        }
     }
 }

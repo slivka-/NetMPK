@@ -11,21 +11,29 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Pathfinding p = new Pathfinding();
-            //p.FindConnection("a", "b");
-            //List<Node> t = p.Nodes;
-            int counter = 0;
-            List<string> result = p.Test();
-            //foreach (var n in t)
-            //{
-            //    mainContent.InnerHtml += counter + ":  " + n.U + " - " + n.V + " w: " + n.W + "</br>";
-            //    counter++;
-            //}
+            
+        }
 
-            foreach (var n in result)
+        protected void routeSearchButton_Click(object sender, EventArgs e)
+        {
+            Pathfinding p = new Pathfinding();
+            string source = sourceStop.Text;
+            string end = endStop.Text;
+            List<string> result;
+            try
             {
-                mainContent.InnerHtml += counter + ":  " + n + "</br>";
-                counter++;
+                result = p.FindConnection(source, end);
+                int counter = 1;
+                foreach (var n in result)
+                {
+                    mainContent.InnerHtml += counter + ":  " + n + "</br>";
+                    counter++;
+                }
+            }
+            catch (ArgumentException ae)
+            {
+                mainContent.InnerHtml += @"Nie można znaleźć trasy pomiędzy wybranymi przystankami.
+                                        Upewnij się, że są poprawne";//ae.Message + "</br>";
             }
         }
     }

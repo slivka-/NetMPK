@@ -20,18 +20,36 @@ namespace NetMPK
         DatabaseConnection connection = DatabaseConnection.getInstance();
         Dictionary<int, string> idToName;
 
-        public void FindConnection(String stopStart, String stopEnd)
+        public List<string> FindConnection(string stopStart, string stopEnd)
         {
-            
-            n = connection.GetStopCount();
+            if (!ValidateUserInput(stopStart, stopEnd))
+                throw new ArgumentException("Złe nazwy przystanków");
 
             InitializeNodes();
-            
-            e = Nodes.Count;
-            d = new int[n+1];
-            p = new int[n+1];
-            source = connection.GetIDFromStopName(stopStart);//Source vertex
+            InitializeVariables(stopStart, stopEnd);
+            return Find(); 
+        }
+
+        private void InitializeVariables(string stopStart, string stopEnd)
+        {
+            source = connection.GetIDFromStopName(stopStart); //Source vertex
             stop = connection.GetIDFromStopName(stopEnd);
+            e = Nodes.Count;
+            d = new int[n + 1];
+            p = new int[n + 1];
+        }
+
+        private bool ValidateUserInput(string stopStart, string stopEnd)
+        {
+            if (string.IsNullOrEmpty(stopStart))
+                return false;
+            if (string.IsNullOrEmpty(stopEnd))
+                return false;
+            if (!connection.CheckIfExists(stopStart))
+                return false;
+            if (!connection.CheckIfExists(stopEnd))
+                return false;
+            return true;
         }
 
         private void InitializeNodes()
@@ -42,9 +60,9 @@ namespace NetMPK
             for (int i = 0; i < stopsID.Count; ++i)
             {
                 idToName.Add(stopsID[i], connection.GetStopNameFromID(stopsID[i]));
-                //idToName.Add(i, connection.GetStopNameFromID(i));
             }
             //n to liczba przystanków
+            n = connection.GetStopCount();
             for (int i = 0; i < n; ++i)
             {
                 List<int> connections = connection.GetAllToStopID(stopsID[i]);
@@ -56,6 +74,7 @@ namespace NetMPK
                     //getTimeFromConnection(u, v)- i to ma być int
 
                     Nodes.Add(new Node(stopsID[i], connections[j], connection.GetTimeFromConnection(stopsID[i], connections[j])));
+                    Nodes.Add(new Node(connections[j], stopsID[i], connection.GetTimeFromConnection(stopsID[i], connections[j])));
                 }
             }
         }
@@ -92,9 +111,8 @@ namespace NetMPK
             return true;
         }
 
-        public List<string> Test()
+        private List<string> Find()
         {
-            FindConnection("Salwator", "Kapelanka");
             List<string> result = new List<string>();
             Relax();
             //if (Cycle())

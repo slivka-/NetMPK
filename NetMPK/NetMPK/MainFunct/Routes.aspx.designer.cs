@@ -13,6 +13,24 @@ namespace NetMPK.MainFunct {
     public partial class Routes {
         
         /// <summary>
+        /// sourceStop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox sourceStop;
+        
+        /// <summary>
+        /// endStop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox endStop;
+        
+        /// <summary>
         /// mainContent control.
         /// </summary>
         /// <remarks>
