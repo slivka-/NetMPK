@@ -59,7 +59,7 @@
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Register">Rejestracja</a></li>
-                                <li><a runat="server" href="~/Account/Login">Logowanie</a></li>
+                                <li><a runat="server" href="~/Account/LoginSite">Logowanie</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>

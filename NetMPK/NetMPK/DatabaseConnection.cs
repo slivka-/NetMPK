@@ -133,8 +133,8 @@ namespace NetMPK
                 ID = Convert.ToInt32(o) + 1;
             }
 
-            query = @"INSERT INTO Users (Id_user, Username, Mail, User_password, User_status) VALUES
-            (" + ID + @", '" + user.Username + @"', '" + user.Mail + @"', '" + user.Password + @"', " + (user.UserStatus ? 1 : 0) + @" );";
+            query = @"INSERT INTO Users (Id_user, Username, Mail, User_password, User_status, Verification_Code) VALUES
+            (" + ID + @", '" + user.Username + @"', '" + user.Mail + @"', '" + user.Password + @"', " + (user.UserStatus ? 1 : 0) + @", " + user.VerificationCode + @" );";
             cmd = new SqlCommand(query, sqlConnection);
             cmd.ExecuteNonQuery();
         }
@@ -144,6 +144,15 @@ namespace NetMPK
             String query = @"SELECT COUNT(*) FROM USERS WHERE Mail = @mail;";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             cmd.Parameters.AddWithValue("@mail", mail);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            return result > 0;
+        }
+
+        public bool IsCodeInDB(int verificationCode)
+        {
+            String query = @"SELECT COUNT(*) FROM USERS WHERE Verification_Code = @code;";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@code", verificationCode);
             int result = Convert.ToInt32(cmd.ExecuteScalar());
             return result > 0;
         }

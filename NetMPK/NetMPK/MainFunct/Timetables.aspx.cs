@@ -12,7 +12,14 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
+            {
+                //TU KOD STRONY
+            }
+            else
+            {
+                Response.Redirect("NotLoggedIn");
+            }
         }
     }
 }

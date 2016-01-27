@@ -44,43 +44,59 @@ namespace NetMPK.Account
             }
             if (canRegister)
             {
+                Random rnd = new Random();
+                int verificationCode = rnd.Next(100000, 999999);
+                while (DBConnection.IsCodeInDB(verificationCode))
+                {
+                    verificationCode = rnd.Next(100000, 999999);
+                }
                 User u = new NetMPK.User();
                 u.Username = userLogin;
                 u.Mail = userEmail;
                 u.Password = userPassword;
                 u.UserStatus = false;
+                u.VerificationCode = verificationCode;
                 DBConnection.SaveUser(u);
-                SuccessMessage.Text = "Dziękujemy za rejestracje";
+                if (sendMail(u.Mail))
+                {
+                    SuccessMessage.Text = "Dziękujemy za rejestracje. Wiadomość potwierdzająca została wysłana na podany e-mail.";
+                }
+                else
+                {
+                    SuccessMessage.Text = "Dziękujemy za rejestracje.";
+                    ErrorMessage.Text = "Wysłanie potwierdzenia nie powiodło się, spróbój ponownie później";
+                }
             }
             DBConnection.CloseConnection();
         }
 
-        /*
-        private Boolean sendMail(string mailAdress)
+        private bool sendMail(string mailAddress)
         {
-            
             try
-            {
-                
-                string serverSMTP = "";
-                int portSMTP = 587;
-                SmtpClient smtp = new SmtpClient(serverSMTP, portSMTP);
-                string adres = "";
-                smtp.Credentials = new NetworkCredential(adres, "");
-                MailMessage mail = new MailMessage(adres, mailAdress);
-                mail.Subject = "TEST";
-                mail.Body = "TEST";
-                mail.IsBodyHtml = true;
-                smtp.Send(mail);
+            { 
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("netmpk.mailer@gmail.com", "NetMPK");
+                message.To.Add(new MailAddress(mailAddress));
+                message.Subject = "Weryfikacja rejestracji";
+                message.Body = "TEST";
+
+                NetworkCredential cred = new NetworkCredential("netmpk.mailer@gmail.com", "cde3$RFV");
+                SmtpClient mailer = new SmtpClient();
+                mailer.Credentials = cred;
+                mailer.Host = "smtp.gmail.com";
+                mailer.Port = 587;
+                mailer.EnableSsl = true;
+                mailer.Send(message);
                 return true;
+
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
                 return false;
             }
         }
-        */
+
     }
 
 }

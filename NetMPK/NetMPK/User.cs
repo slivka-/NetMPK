@@ -11,5 +11,6 @@ namespace NetMPK
         public string Mail { get; set; }
         public string Password { get; set; }
         public bool UserStatus { get; set; }
+        public int VerificationCode { get; set; }
     }
 }

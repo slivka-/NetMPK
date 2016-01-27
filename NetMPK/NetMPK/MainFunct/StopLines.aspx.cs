@@ -11,31 +11,38 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            String stopname = Request.QueryString["stopname"];
-            titleText.InnerText += stopname;
-
-            DatabaseConnection db = DatabaseConnection.getInstance();
-            db.OpenConnection();
-            try
+            if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
             {
-                List<string> values = db.GetLinesFromStop(stopname);
-                db.CloseConnection();
-                if (values.Count == 0)
+                String stopname = Request.QueryString["stopname"];
+                titleText.InnerText += stopname;
+
+                DatabaseConnection db = DatabaseConnection.getInstance();
+                db.OpenConnection();
+                try
                 {
-                    mainContent.InnerHtml += "<h3>Nie ma takigo przystanku</h3>";
-                }
-                else
-                {
-                    foreach (string s in values)
+                    List<string> values = db.GetLinesFromStop(stopname);
+                    db.CloseConnection();
+                    if (values.Count == 0)
                     {
-                        mainContent.InnerHtml += "<a runat=\"server\" href=\"Timetables.aspx?linenumber=" + s + "&stopname=" + stopname + "\" class=\"btn btn-default\">" + s + "</a>";
+                        mainContent.InnerHtml += "<h3>Nie ma takigo przystanku</h3>";
+                    }
+                    else
+                    {
+                        foreach (string s in values)
+                        {
+                            mainContent.InnerHtml += "<a runat=\"server\" href=\"Timetables.aspx?linenumber=" + s + "&stopname=" + stopname + "\" class=\"btn btn-default\">" + s + "</a>";
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    mainContent.InnerHtml += "<h3>Nie ma takigo przystanku</h3>";
+                    db.CloseConnection();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                mainContent.InnerHtml += "<h3>Nie ma takigo przystanku</h3>";
-                db.CloseConnection();
+                Response.Redirect("NotLoggedIn");
             }
         }
     }
