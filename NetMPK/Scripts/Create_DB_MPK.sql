@@ -97,7 +97,7 @@ ALTER TABLE [Track]
 GO
 CREATE INDEX stop_number_index ON [LineConnection] (Stop_number)
 GO
-CREATE PROCEDURE CZAS_DO_PRZYSTANKU @NAZWA_P varchar(30), @LINIA INT, @START_TIME time(7)
+CREATE PROCEDURE CZAS_DO_PRZYSTANKU @NAZWA_P varchar(30), @LINIA INT, @START_TIME time(7), @DIRECTION bit
 AS
 BEGIN
 	DECLARE @TIME_TOTAL time(7);
@@ -106,7 +106,7 @@ BEGIN
 	DECLARE @START INT;
 	DECLARE @STOP INT;
 	DECLARE @LINIA_ID INT = (SELECT Id_line FROM Line WHERE Line_number = @LINIA);
-	SET @StopNumber = (SELECT lr.Stop_number FROM LineRoute lr
+	SET @StopNumber = (SELECT lr.Stop_number FROM LineConnection lr
 	JOIN Line l ON l.Id_line = lr.Id_line
 	JOIN Connection c ON c.Id_route = lr.Id_route
 	JOIN LineStop ls ON c.From_stop_id = ls.Id_stop
@@ -115,19 +115,36 @@ BEGIN
 	DECLARE @LICZNIK INT = 1;
 	WHILE @LICZNIK < @StopNumber
 	BEGIN
-		SET @START = (SELECT c.From_stop_id FROM Connection c
-		JOIN LineRoute lr ON c.Id_route = lr.Id_route
-		WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
+		IF(@DIRECTION = 0)
+		BEGIN
+			SET @START = (SELECT c.From_stop_id FROM Connection c
+			JOIN LineConnection lr ON c.Id_route = lr.Id_route
+			WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
 
-		SET @STOP = (SELECT c.To_stop_id FROM Connection c
-		JOIN LineRoute lr ON c.Id_route = lr.Id_route
-		WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
+			SET @STOP = (SELECT c.To_stop_id FROM Connection c
+			JOIN LineConnection lr ON c.Id_route = lr.Id_route
+			WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
 
-		SET @TIME_TOTAL = (SELECT DATEADD(minute, DATEPART(minute, c.Transfer_time), @TIME_TOTAL)
-		FROM Connection c
-		WHERE c.From_stop_id = @START
-		AND c.To_stop_id = @STOP);
+			SET @TIME_TOTAL = (SELECT DATEADD(minute, DATEPART(minute, c.Transfer_time), @TIME_TOTAL)
+			FROM Connection c
+			WHERE c.From_stop_id = @START
+			AND c.To_stop_id = @STOP);
+		END
+		ELSE
+		BEGIN
+			SET @START = (SELECT c.To_stop_id FROM Connection c
+			JOIN LineConnection lr ON c.Id_route = lr.Id_route
+			WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
 
+			SET @STOP = (SELECT c.From_stop_id FROM Connection c
+			JOIN LineConnection lr ON c.Id_route = lr.Id_route
+			WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
+
+			SET @TIME_TOTAL = (SELECT DATEADD(minute, DATEPART(minute, c.Transfer_time), @TIME_TOTAL)
+			FROM Connection c
+			WHERE c.From_stop_id = @START
+			AND c.To_stop_id = @STOP);
+		END
 		SET @LICZNIK = @LICZNIK + 1;
 	END
 	SELECT @TIME_TOTAL;

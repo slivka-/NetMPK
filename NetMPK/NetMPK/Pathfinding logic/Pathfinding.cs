@@ -102,44 +102,10 @@ namespace NetMPK
             }
         }
 
-        public bool Cycle()
-        {
-            int j;
-            for (j = 0; j < e; ++j)
-                if (d[Nodes[j].U] + Nodes[j].W < d[Nodes[j].V])
-                    return false;
-            return true;
-        }
-
         private List<string> Find()
         {
             List<string> result = new List<string>();
             Relax();
-            //if (Cycle())
-            //{
-            //    for (int i = 0; i < n; ++i)
-            //    {
-            //        if (d[i] != INFINITY)
-            //            result.Add(idToName[source] + " ===> " + d[i]);
-            //    }
-            //}
-            //for (int i = 0; i < n; ++i)
-            //{
-            //    if (p[i] != -1)
-            //    {
-            //        //dziala, wazne
-            //        if (p[i] == 0)
-            //        {
-            //            //result.Add(idToName[i] + " ma predecessora " + idToName[p[source]]);
-            //            result.Add(idToName[p[source]] + " jedzie na " + idToName[i]);
-            //        }
-            //        else
-            //        {
-            //            result.Add(idToName[p[i]] + " jedzie na " + idToName[i]);
-            //            //result.Add(idToName[i] + " ma predecessora " + idToName[p[i]]);
-            //        }
-            //    }
-            //}
 
             int current = stop;
             while (current != source)
