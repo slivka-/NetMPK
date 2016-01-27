@@ -12,7 +12,21 @@
             });
         });
     </script>
-    <h2><%: Title %>.</h2>
+    <h2>Witaj <%: username %>!</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Oto twoje statystyki</h3>
+            <h7>Średni czas spędzony w podróży: <%: avgTime %></h7><br/>
+            <h7>Ulubiona linia: <%: favLine %></h7>
+        </div>
+        <div class="col-md-2">
+            <h3>Zapisane trasy</h3>
+            
+        </div>
+
+    </div>
+
 
     <asp:Label runat="server" ID="wLabel" CssClass="text-success"/>
 </asp:Content>

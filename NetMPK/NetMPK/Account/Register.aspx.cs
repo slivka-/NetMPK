@@ -8,6 +8,7 @@ using Owin;
 using NetMPK.Models;
 using System.Net.Mail;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace NetMPK.Account
 {
@@ -22,26 +23,54 @@ namespace NetMPK.Account
 
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-            canRegister = true;
-            userLogin = Login.Text;
-            userEmail = Email.Text;
-            userPassword = Password.Text;
-            DBConnection = DatabaseConnection.getInstance();
-            DBConnection.OpenConnection();
             LoginErr.Text = "";
             EmailErr.Text = "";
             SuccessMessage.Text = "";
+            Regex rx = new Regex("^((?!').)*$");
+            canRegister = true;
+            bool isValidName = true;
 
-            if (DBConnection.IsUsernameInDB(userLogin)) 
+            if (rx.IsMatch(Login.Text))
             {
-                LoginErr.Text = "Nazwa użytkownika zajęta";
-                canRegister = false;
+                userLogin = Login.Text;
             }
-            if (DBConnection.IsMailInDB(userEmail))
+            else
             {
-                EmailErr.Text = "Jest już użytkownik z takim adresem";
                 canRegister = false;
+                isValidName = false;
+                LoginErr.Text = "W nazwie użytkownika nie może znajdować się znak '";
             }
+            userEmail = Email.Text;
+            if (rx.IsMatch(Password.Text))
+            {
+                userPassword = Password.Text;
+            }
+            else
+            {
+                canRegister = false;
+                isValidName = false;
+                LoginErr.Text = "W haśle nie może znajdować się znak '";
+            }
+
+
+            DBConnection = DatabaseConnection.getInstance();
+            DBConnection.OpenConnection();
+
+            if (isValidName)
+            {
+                
+                if (DBConnection.IsUsernameInDB(userLogin))
+                {
+                    LoginErr.Text = "Nazwa użytkownika zajęta";
+                    canRegister = false;
+                }
+                if (DBConnection.IsMailInDB(userEmail))
+                {
+                    EmailErr.Text = "Jest już użytkownik z takim adresem";
+                    canRegister = false;
+                }
+            }
+            
             if (canRegister)
             {
                 Random rnd = new Random();

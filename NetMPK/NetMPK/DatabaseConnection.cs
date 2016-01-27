@@ -201,6 +201,19 @@ namespace NetMPK
             cmd.ExecuteNonQuery();
         }
 
-
+        public List<String> getUserStatistics(String Username)
+        {
+            List<String> items = new List<String>();
+            String query = @"SELECT Avg_time,Fav_line FROM UserStatistics WHERE Id_user IN(SELECT Id_user FROM USERS WHERE Username = '" + Username + @"');";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    items.Add(Convert.ToString(rdr["Avg_time"]) +"|"+ Convert.ToString(rdr["Fav_line"]));
+                }
+            }
+            return items;
+        }
     }
 }

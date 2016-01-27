@@ -32,6 +32,7 @@ namespace NetMPK.MainFunct
             {
                 DatabaseConnection db = DatabaseConnection.getInstance();
                 NetMPKGlobalVariables userInfo = NetMPKGlobalVariables.getInstance();
+                db.OpenConnection();
                 int codeInt = int.Parse(code);
                 int userCode = db.getUserVerificationCode(userInfo.loggedInUserName);
                 if (userCode == codeInt)
@@ -44,18 +45,22 @@ namespace NetMPK.MainFunct
                 {
                     codeErr.Text = "Błędny kod";
                 }
+                db.CloseConnection();
             }
             else
             {
                 codeErr.Text = "Niepoprawny format kodu";
             }
+
         }
 
         protected void ResendEmail(object sender, EventArgs e)
         {
             DatabaseConnection db = DatabaseConnection.getInstance();
             String userName = NetMPKGlobalVariables.getInstance().loggedInUserName;
+            db.OpenConnection();
             String email = db.getUserEmail(userName);
+
             int code = db.getUserVerificationCode(userName);
             if (sendMail(email, code))
             {
@@ -65,6 +70,7 @@ namespace NetMPK.MainFunct
             {
                 resendLabelErr.Text = "Błąd! Spróbuj ponownie później";
             }
+            db.CloseConnection();
         }
 
         private bool sendMail(string mailAddress, int code)

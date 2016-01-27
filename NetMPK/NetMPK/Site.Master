@@ -64,7 +64,7 @@
 
                     <%}else { %>
                           <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/UserSite.aspx" >Witaj <%: loggedUserName  %> !</a></li>
+                                <li><a runat="server" href="~/Account/UserSite.aspx" >Panel użytkownika <%: loggedUserName  %>!</a></li>
                                 <li><a runat="server" href="~/Account/LogoutSite.aspx" >Wyloguj</a></li>
 
                             </ul>

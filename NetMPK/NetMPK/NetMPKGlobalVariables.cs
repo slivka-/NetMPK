@@ -15,9 +15,9 @@ namespace NetMPK
 
         private NetMPKGlobalVariables()
         {
-            isUserLoggedIn = false;
-            loggedInUserName = "";
-            userVerified = false;
+            isUserLoggedIn = true;
+            loggedInUserName = "slivka";
+            userVerified = true;
         }
 
         public static NetMPKGlobalVariables getInstance()

@@ -11,7 +11,7 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("WESZLO");
+
             NetMPKGlobalVariables.unload();
         }
     }
