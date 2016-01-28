@@ -171,7 +171,7 @@ namespace NetMPK
         public List<int> GetAllStopsID()
         {
             OpenConnection();
-            String query = @"SELECT Id_line FROM Line";
+            String query = @"SELECT Id_stop FROM LineStop";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             List<int> items = new List<int>();
 
@@ -179,7 +179,7 @@ namespace NetMPK
             {
                 while (rdr.Read())
                 {
-                    items.Add(Convert.ToInt32(rdr["Id_line"]));
+                    items.Add(Convert.ToInt32(rdr["Id_stop"]));
                 }
             }
             CloseConnection();
@@ -215,7 +215,6 @@ namespace NetMPK
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             cmd.Parameters.AddWithValue("@id1", id1);
             cmd.Parameters.AddWithValue("@id2", id2);
-            //DateTime result = Convert.ToDateTime(cmd.ExecuteScalar());
             DateTime result = DateTime.ParseExact(cmd.ExecuteScalar().ToString(),
                 "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
             CloseConnection();
