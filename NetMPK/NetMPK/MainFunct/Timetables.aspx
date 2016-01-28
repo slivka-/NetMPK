@@ -14,6 +14,39 @@
             });
         });
     </script>
-    <h2><%: Title %>.</h2>
+    <h2>Wyszukaj rozkład</h2>
+    <p class="text-danger">
+            <asp:Literal runat="server" ID="ErrorMessage0" /><asp:Literal runat="server" ID="ErrorMessage1" />
+    </p>
+
+    <h4>Linia:</h4><asp:TextBox runat="server" ID="lineSearch" /> 
+    <h4>Przystanek:</h4><asp:TextBox runat="server" ID="stopSearch" /><br/>
+    <asp:Button runat="server" OnClick="timeTableSearch" ID="stopSearchButton" Text="Szukaj" />
     
+    
+    <h2><p runat="server" id="titleText"></p></h2>
+    <div class="row">
+    <asp:Literal runat="server" ID="DIR" />
+    <div class="col-md-3" id="weekDays" runat="server">
+        Dni powszednie<br/>
+    </div>
+    <div class="col-md-3" id="saturDays" runat="server">
+        Soboty<br/>
+    </div>
+    <div class="col-md-3" id="holykDays" runat="server">
+        Niedziele i święta<br/>
+    </div>  
+    </div>
+    <div class="row">
+    <asp:Literal runat="server" ID="DIR1" />
+    <div class="col-md-3" id="weekDays1" runat="server">
+        Dni powszednie<br/>
+    </div>
+    <div class="col-md-3" id="saturDays1" runat="server">
+        Soboty<br/>
+    </div>
+    <div class="col-md-3" id="holykDays1" runat="server">
+        Niedziele i święta<br/>
+    </div>  
+    </div>
 </asp:Content>

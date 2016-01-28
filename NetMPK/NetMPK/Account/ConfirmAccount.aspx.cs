@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace NetMPK.MainFunct
+namespace NetMPK.Account
 {
     public partial class ConfirmAccount : System.Web.UI.Page
     {
@@ -26,14 +26,14 @@ namespace NetMPK.MainFunct
 
         protected void ConfirmUser_Click(object sender, EventArgs e)
         {
-            String code = vCode.Text;
+            String code =  vCode.Text;
             Regex r = new Regex("[0-9]{6}");
             if (r.IsMatch(code))
             {
                 DatabaseConnection db = DatabaseConnection.getInstance();
                 NetMPKGlobalVariables userInfo = NetMPKGlobalVariables.getInstance();
                 db.OpenConnection();
-                int codeInt = int.Parse(code);
+                int codeInt  = int.Parse(code);
                 int userCode = db.getUserVerificationCode(userInfo.loggedInUserName);
                 if (userCode == codeInt)
                 {

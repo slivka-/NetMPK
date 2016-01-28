@@ -155,8 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="Account\LogoutSite.aspx" />
+    <Content Include="Account\AdminPanel.aspx" />
     <Content Include="Account\ConfirmAccount.aspx" />
+    <Content Include="Account\LogoutSite.aspx" />
     <Content Include="Account\LoginSite.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\BLANK.aspx" />
@@ -224,12 +225,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\LogoutSite.aspx.cs">
-      <DependentUpon>LogoutSite.aspx</DependentUpon>
+    <Compile Include="Account\AdminPanel.aspx.cs">
+      <DependentUpon>AdminPanel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Account\LogoutSite.aspx.designer.cs">
-      <DependentUpon>LogoutSite.aspx</DependentUpon>
+    <Compile Include="Account\AdminPanel.aspx.designer.cs">
+      <DependentUpon>AdminPanel.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\ConfirmAccount.aspx.cs">
       <DependentUpon>ConfirmAccount.aspx</DependentUpon>
@@ -237,6 +238,13 @@
     </Compile>
     <Compile Include="Account\ConfirmAccount.aspx.designer.cs">
       <DependentUpon>ConfirmAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\LogoutSite.aspx.cs">
+      <DependentUpon>LogoutSite.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\LogoutSite.aspx.designer.cs">
+      <DependentUpon>LogoutSite.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\LoginSite.aspx.cs">
       <DependentUpon>LoginSite.aspx</DependentUpon>

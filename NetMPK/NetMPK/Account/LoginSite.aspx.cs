@@ -38,10 +38,15 @@ namespace NetMPK.Account
                     if (vStatus != 0)
                     {
                         n.userVerified = true;
+                        if (vStatus == 66)
+                        {
+                            n.admin = true;
+                            Response.Redirect("AdminPanel.aspx");
+                        }
+
                     }
-                    
                     Response.Redirect("UserSite.aspx");
-                    
+
                 }
                 else
                 {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NetMPK.MainFunct {
+namespace NetMPK.Account {
     
     
     public partial class UserSite {

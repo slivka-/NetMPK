@@ -215,5 +215,36 @@ namespace NetMPK
             }
             return items;
         }
+
+        public List<String> getStartingTimes(int linenumber, int direction)
+        {
+            List<String> items = new List<String>();
+            String query = @"SELECT Starting_time,DayWeek FROM LINEDETAILS WHERE Line_number = " + linenumber + @" AND Direction = "+direction+@" ORDER BY Starting_time ASC;";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    items.Add(Convert.ToString(rdr["Starting_time"])+"|"+ Convert.ToString(rdr["DayWeek"]));
+                }
+            }
+            return items;
+        }
+
+        public List<String> getArrivalTime(String stopname,int linenumber,String startTime, int direction)
+        {
+            List<String> items = new List<String>();
+            String query = @"exec CZAS_DO_PRZYSTANKU @NAZWA_P ='"+stopname+@"', @LINIA='"+linenumber+@"', @START_TIME = '"+startTime+@"', @DIRECTION = "+direction+";";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+                    items.Add(Convert.ToString(rdr.GetValue(0)));
+                }
+            }
+            return items;
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Strona użytkownika" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserSite.aspx.cs" Inherits="NetMPK.MainFunct.UserSite" %>
+﻿<%@ Page Title="Strona użytkownika" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserSite.aspx.cs" Inherits="NetMPK.Account.UserSite" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">

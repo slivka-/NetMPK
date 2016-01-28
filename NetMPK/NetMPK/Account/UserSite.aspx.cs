@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace NetMPK.MainFunct
+namespace NetMPK.Account
 {
     public partial class UserSite : System.Web.UI.Page
     {
