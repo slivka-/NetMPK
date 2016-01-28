@@ -52,7 +52,7 @@ namespace NetMPK.MainFunct
                         }
 
                         List<String> startingTimes1 = db.getStartingTimes(linenumber, 1);
-                        DIR1.Text = "Kierunek 0";
+                        DIR1.Text = "Kierunek 1";
                         foreach (String s1 in startingTimes1)
                         {
                             String starttime1 = s1.Split('|')[0];

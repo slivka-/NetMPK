@@ -13,6 +13,15 @@ namespace NetMPK.Account {
     public partial class UserSite {
         
         /// <summary>
+        /// savedTracks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl savedTracks;
+        
+        /// <summary>
         /// wLabel control.
         /// </summary>
         /// <remarks>

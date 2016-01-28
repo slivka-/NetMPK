@@ -20,9 +20,9 @@
             <h7>Średni czas spędzony w podróży: <%: avgTime %></h7><br/>
             <h7>Ulubiona linia: <%: favLine %></h7>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-6">
             <h3>Zapisane trasy</h3>
-            
+            <div id="savedTracks" runat="server"/>
         </div>
 
     </div>

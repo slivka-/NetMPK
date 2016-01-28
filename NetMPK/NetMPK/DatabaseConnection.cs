@@ -359,7 +359,7 @@ namespace NetMPK
             OpenConnection();
             String query = @"SELECT l.Line_number
                             FROM Line l
-                            JOIN LineConnection lc ON l.Id_line = lc.Id_route
+                            JOIN LineConnection lc ON l.Id_line = lc.Id_line
                             JOIN Connection c ON lc.Id_route = c.Id_route
                             WHERE (c.From_stop_id = @id1 AND c.To_stop_id = @id2)
                             OR (c.From_stop_id = @id2 AND c.To_stop_id = @id1);";
@@ -407,6 +407,22 @@ namespace NetMPK
             String query2 = @"INSERT INTO UserTracks (Id_user, Id_track) VALUES (" + userID + @", " + trackID + @");";
             SqlCommand cmd2 = new SqlCommand(query2, sqlConnection);
             cmd2.ExecuteNonQuery();
+        }
+
+        public List<String> getUserTracks(String Username)
+        {
+            List<String> items = new List<String>();
+            String query = @"SELECT Id_start,Id_end FROM TRACK WHERE Id_track IN(SELECT Id_track FROM USERTRACKS WHERE Id_user = " + getUserID(Username) + @");";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+
+                    items.Add(Convert.ToString(rdr["Id_start"]) + "|" + Convert.ToString(rdr["Id_end"]));
+                }
+            }
+            return items;
         }
 
     }

@@ -12,7 +12,6 @@
             });
         });
     </script>
-    <h2><%: Title %>.</h2>
      <h2> 
         Wyszukaj połączenie
     </h2>

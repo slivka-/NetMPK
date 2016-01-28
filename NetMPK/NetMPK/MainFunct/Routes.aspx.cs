@@ -9,8 +9,7 @@ namespace NetMPK.MainFunct
 {
     public partial class Routes : System.Web.UI.Page
     {
-        public String _routeStart ="";
-        public String _routeEnd = "";
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -20,6 +19,14 @@ namespace NetMPK.MainFunct
                 if (NetMPKGlobalVariables.getInstance().userVerified)
                 {
                     routeSaveBtn.Visible = false;
+                    String routeSource = Request.QueryString["firstStop"];
+                    String routeEnd = Request.QueryString["lastStop"];
+                    if (routeSource != null && routeEnd != null)
+                    {
+                        sourceStop.Text = routeSource;
+                        endStop.Text = routeEnd;
+                        searchTrack(routeSource, routeEnd);
+                    }
                 }
                 else
                 {
@@ -35,25 +42,26 @@ namespace NetMPK.MainFunct
 
         protected void routeSearchButton_Click(object sender, EventArgs e)
         {
-            Pathfinding p = new Pathfinding();
             string source = sourceStop.Text;
             string end = endStop.Text;
-            _routeStart = sourceStop.Text;
-            _routeEnd = endStop.Text;
-            System.Diagnostics.Debug.WriteLine(source);
-            System.Diagnostics.Debug.WriteLine(end);
+            searchTrack(source, end);
+        }
+
+        private void searchTrack(String source, String end)
+        {
+            Pathfinding p = new Pathfinding();
             List<string> result;
             try
             {
                 mainContent.InnerHtml = "";
                 result = p.FindConnection(source, end);
-                for(int i = 0; i < result.Count-1; ++i)
+                for (int i = 0; i < result.Count - 1; ++i)
                 {
-                    mainContent.InnerHtml += i+1 + ":  " + result[i] + "</br>";
+                    mainContent.InnerHtml += i + 1 + ":  " + result[i] + "</br>";
                 }
                 mainContent.InnerHtml += result[result.Count - 1];
                 //mainContent.InnerHtml += " </br><a runat=\"server\"  class = \"btn btn-default\" href=\"Account/UserSite.aspx?firstStop=" + source + "&lastStop="+end+"\">Zapisz trasę</a></br></br>";
-                
+
                 routeSaveBtn.Visible = true;
             }
             catch (ArgumentException ae)
@@ -66,6 +74,9 @@ namespace NetMPK.MainFunct
 
         protected void routeSaveButton(object sender, EventArgs e)
         {
+
+            String _routeStart = sourceStop.Text;
+            String _routeEnd = endStop.Text;
             Response.Redirect("~/Account/UserSite.aspx?firstStop=" + _routeStart + "&lastStop="+_routeEnd);
         }
     }

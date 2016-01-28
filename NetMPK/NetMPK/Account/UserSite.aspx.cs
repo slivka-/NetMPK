@@ -28,6 +28,7 @@ namespace NetMPK.Account
                     username = userInfo.loggedInUserName;
                     db.OpenConnection();
                     List<String> stats = db.getUserStatistics(username);
+                    List<String> tracks = db.getUserTracks(username);
                     db.CloseConnection();
 
                     avgTime = stats[0].Split('|')[0];
@@ -35,17 +36,30 @@ namespace NetMPK.Account
 
                     String routeSource = Request.QueryString["firstStop"];
                     String routeEnd = Request.QueryString["lastStop"];
+                    int cnt = 1;
+                    db.OpenConnection();
 
-                    System.Diagnostics.Debug.WriteLine(routeSource);
-                    System.Diagnostics.Debug.WriteLine(routeEnd);
+                    foreach (String s in tracks)
+                    {
+                        int startID = int.Parse(s.Split('|')[0]);
+                        int endID = int.Parse(s.Split('|')[1]);
 
+                        String startName = db.GetStopNameFromID(startID);
+                        String endName = db.GetStopNameFromID(endID);
+
+                        savedTracks.InnerHtml += "Trasa " + cnt + ") " + startName + " -> " + endName;
+                        savedTracks.InnerHtml += " <a runat=\"server\" href=\"http://localhost:54369/MainFunct/Routes.aspx?firstStop="+startName+"&lastStop="+endName+"\" class = \"btn btn-default\">Przejdz</a></br>";
+
+                        cnt++;
+                    }
+                    db.CloseConnection();
                     if (routeSource != null && routeEnd != null)
                     {
                         db.OpenConnection();
                         int trackID = db.getTrackCount() + 1;                     
                         int userID = db.getUserID(NetMPKGlobalVariables.getInstance().loggedInUserName);
 
-                        //db.SaveTrack(trackID, routeSource, routeEnd,userID);
+                        db.SaveTrack(trackID, routeSource, routeEnd,userID);
                         db.CloseConnection();
                     }
                 }
