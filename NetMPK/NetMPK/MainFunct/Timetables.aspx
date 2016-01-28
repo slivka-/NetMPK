@@ -19,8 +19,15 @@
             <asp:Literal runat="server" ID="ErrorMessage0" /><asp:Literal runat="server" ID="ErrorMessage1" />
     </p>
 
-    <h4>Linia:</h4><asp:TextBox runat="server" ID="lineSearch" /> 
-    <h4>Przystanek:</h4><asp:TextBox runat="server" ID="stopSearch" /><br/>
+    <div class="row">
+        <div class="col-md-2">
+        <h4>Linia:</h4><asp:TextBox runat="server" ID="lineSearch" /> 
+        </div>
+        <div class="col-md-2">
+        <h4>Przystanek:</h4><asp:TextBox runat="server" ID="stopSearch" /><br/>
+        </div>
+    </div>
+    <br/>
     <asp:Button runat="server" OnClick="timeTableSearch" ID="stopSearchButton" Text="Szukaj" />
     
     

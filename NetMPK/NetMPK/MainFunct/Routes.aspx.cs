@@ -40,12 +40,14 @@ namespace NetMPK.MainFunct
             {
                 mainContent.InnerHtml = "";
                 result = p.FindConnection(source, end);
-                int counter = 1;
-                foreach (var n in result)
+                for(int i = 0; i < result.Count-1; ++i)
                 {
-                    mainContent.InnerHtml += counter + ":  " + n + "</br>";
-                    counter++;
+                    mainContent.InnerHtml += i+1 + ":  " + result[i] + "</br>";
                 }
+                mainContent.InnerHtml += result[result.Count - 1];
+                //mainContent.InnerHtml += " </br><a runat=\"server\"  class = \"btn btn-default\" OnClick=\"SaveRouteButton_Click\" >Zapisz trasę</a></br></br>";
+                //mainContent.InnerHtml += @"<asp:Button runat=""server"" OnClick=""SaveRouteButton_Click"" Text=""Zapisz"" />";
+                mainContent.InnerHtml += "</br><button type=\"button\" runat=\"server\"  OnClick=\"SaveRouteButton_Click\">Zapisz</button>";
             }
             catch (ArgumentException ae)
             {
@@ -53,6 +55,10 @@ namespace NetMPK.MainFunct
                                         Upewnij się, że są poprawne";//ae.Message + "</br>";
 
             }
+        }
+        protected void SaveRouteButton_Click(object sender, EventArgs e)
+        {
+            mainContent.InnerHtml +="O kurwa kitowcy";
         }
     }
 }
