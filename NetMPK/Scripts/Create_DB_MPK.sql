@@ -105,6 +105,7 @@ BEGIN
 	DECLARE @StopNumber INT;
 	DECLARE @START INT;
 	DECLARE @STOP INT;
+	DECLARE @LICZNIK INT;
 	DECLARE @LINIA_ID INT = (SELECT Id_line FROM Line WHERE Line_number = @LINIA);
 	SET @StopNumber = (SELECT lr.Stop_number FROM LineConnection lr
 	JOIN Line l ON l.Id_line = lr.Id_line
@@ -112,10 +113,10 @@ BEGIN
 	JOIN LineStop ls ON c.From_stop_id = ls.Id_stop
 	WHERE l.Line_number = @LINIA
 	AND ls.Name = @NAZWA_P)
-	DECLARE @LICZNIK INT = 1;
-	WHILE @LICZNIK < @StopNumber
+	IF(@DIRECTION = 0)
 	BEGIN
-		IF(@DIRECTION = 0)
+		SET @LICZNIK = 1;
+		WHILE @LICZNIK < @StopNumber
 		BEGIN
 			SET @START = (SELECT c.From_stop_id FROM Connection c
 			JOIN LineConnection lr ON c.Id_route = lr.Id_route
@@ -129,23 +130,29 @@ BEGIN
 			FROM Connection c
 			WHERE c.From_stop_id = @START
 			AND c.To_stop_id = @STOP);
+			SET @LICZNIK = @LICZNIK + 1;
 		END
-		ELSE
-		BEGIN
-			SET @START = (SELECT c.To_stop_id FROM Connection c
+	END
+	ELSE
+	BEGIN
+		SET @LICZNIK = (SELECT MAX(lc.Stop_number) FROM LineConnection lc
+		JOIN Line l ON lc.Id_line = l.Id_line
+		WHERE l.Line_number = @LINIA)
+		WHILE @LICZNIK > @StopNumber
+			BEGIN
+			SET @START = (SELECT c.From_stop_id FROM Connection c
 			JOIN LineConnection lr ON c.Id_route = lr.Id_route
 			WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
-
-			SET @STOP = (SELECT c.From_stop_id FROM Connection c
-			JOIN LineConnection lr ON c.Id_route = lr.Id_route
-			WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
+			SET @STOP = (SELECT c.To_stop_id FROM Connection c
+				JOIN LineConnection lr ON c.Id_route = lr.Id_route
+				WHERE lr.Id_line = @LINIA_ID AND lr.Stop_number = @LICZNIK);
 
 			SET @TIME_TOTAL = (SELECT DATEADD(minute, DATEPART(minute, c.Transfer_time), @TIME_TOTAL)
-			FROM Connection c
-			WHERE c.From_stop_id = @START
-			AND c.To_stop_id = @STOP);
+				FROM Connection c
+				WHERE c.From_stop_id = @START
+				AND c.To_stop_id = @STOP);
+			SET @LICZNIK = @LICZNIK - 1;
+			END
 		END
-		SET @LICZNIK = @LICZNIK + 1;
-	END
 	SELECT @TIME_TOTAL;
 END
