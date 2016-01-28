@@ -32,6 +32,22 @@ namespace NetMPK.Account
 
                     avgTime = stats[0].Split('|')[0];
                     favLine = stats[0].Split('|')[1];
+
+                    String routeSource = Request.QueryString["firstStop"];
+                    String routeEnd = Request.QueryString["lastStop"];
+
+                    System.Diagnostics.Debug.WriteLine(routeSource);
+                    System.Diagnostics.Debug.WriteLine(routeEnd);
+
+                    if (routeSource != null && routeEnd != null)
+                    {
+                        db.OpenConnection();
+                        int trackID = db.getTrackCount() + 1;                     
+                        int userID = db.getUserID(NetMPKGlobalVariables.getInstance().loggedInUserName);
+
+                        //db.SaveTrack(trackID, routeSource, routeEnd,userID);
+                        db.CloseConnection();
+                    }
                 }
                 else
                 {

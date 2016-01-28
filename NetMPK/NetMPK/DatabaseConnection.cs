@@ -370,5 +370,44 @@ namespace NetMPK
             CloseConnection();
             return result;
         }
+
+        public int getTrackCount()
+        {
+            String query = @"SELECT COUNT(*) FROM Track";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            return result;
+        }
+
+        public int getUserID(String Username)
+        {
+            String query = @"SELECT Id_user FROM USERS WHERE Username = '" + Username + @"';";
+            List<String> res = GetOneColumnData(query, "Id_user");
+            return int.Parse(res[0]);
+        }
+
+        private int GetStopIDFromName(String stopname)
+        {
+            String query = @"SELECT Id_stop FROM LineStop WHERE Name = @name";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@name", stopname);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            return result;
+        }
+
+        public void SaveTrack(int trackID, String firstStop, String lastStop, int userID)
+        {
+            int firstStopID = GetStopIDFromName(firstStop);
+            int lastStopID = GetStopIDFromName(lastStop);
+
+            String query = @"INSERT INTO Track (Id_track, Id_start, Id_end) VALUES (" + trackID + @", " + firstStopID + @", " + lastStopID + @");";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.ExecuteNonQuery();
+
+            String query2 = @"INSERT INTO UserTracks (Id_user, Id_track) VALUES (" + userID + @", " + trackID + @");";
+            SqlCommand cmd2 = new SqlCommand(query2, sqlConnection);
+            cmd2.ExecuteNonQuery();
+        }
+
     }
 }

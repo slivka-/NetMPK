@@ -37,5 +37,6 @@
     </div>
       
     <div runat="server" id="mainContent"/>
+    <asp:Button runat="server" ID="routeSaveBtn" OnClick="routeSaveButton" Text="Zapisz trase" Visible="false"/>
     
 </asp:Content>

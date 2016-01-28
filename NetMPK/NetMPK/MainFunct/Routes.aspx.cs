@@ -9,6 +9,9 @@ namespace NetMPK.MainFunct
 {
     public partial class Routes : System.Web.UI.Page
     {
+        public String _routeStart ="";
+        public String _routeEnd = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -16,7 +19,7 @@ namespace NetMPK.MainFunct
             {
                 if (NetMPKGlobalVariables.getInstance().userVerified)
                 {
-                    //KOD
+                    routeSaveBtn.Visible = false;
                 }
                 else
                 {
@@ -35,6 +38,10 @@ namespace NetMPK.MainFunct
             Pathfinding p = new Pathfinding();
             string source = sourceStop.Text;
             string end = endStop.Text;
+            _routeStart = sourceStop.Text;
+            _routeEnd = endStop.Text;
+            System.Diagnostics.Debug.WriteLine(source);
+            System.Diagnostics.Debug.WriteLine(end);
             List<string> result;
             try
             {
@@ -45,9 +52,9 @@ namespace NetMPK.MainFunct
                     mainContent.InnerHtml += i+1 + ":  " + result[i] + "</br>";
                 }
                 mainContent.InnerHtml += result[result.Count - 1];
-                //mainContent.InnerHtml += " </br><a runat=\"server\"  class = \"btn btn-default\" OnClick=\"SaveRouteButton_Click\" >Zapisz trasę</a></br></br>";
-                //mainContent.InnerHtml += @"<asp:Button runat=""server"" OnClick=""SaveRouteButton_Click"" Text=""Zapisz"" />";
-                mainContent.InnerHtml += "</br><button type=\"button\" runat=\"server\"  OnClick=\"SaveRouteButton_Click\">Zapisz</button>";
+                //mainContent.InnerHtml += " </br><a runat=\"server\"  class = \"btn btn-default\" href=\"Account/UserSite.aspx?firstStop=" + source + "&lastStop="+end+"\">Zapisz trasę</a></br></br>";
+                
+                routeSaveBtn.Visible = true;
             }
             catch (ArgumentException ae)
             {
@@ -56,9 +63,10 @@ namespace NetMPK.MainFunct
 
             }
         }
-        protected void SaveRouteButton_Click(object sender, EventArgs e)
+
+        protected void routeSaveButton(object sender, EventArgs e)
         {
-            mainContent.InnerHtml +="O kurwa kitowcy";
+            Response.Redirect("~/Account/UserSite.aspx?firstStop=" + _routeStart + "&lastStop="+_routeEnd);
         }
     }
 }
