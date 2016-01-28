@@ -25,8 +25,8 @@
     
     
     <h2><p runat="server" id="titleText"></p></h2>
-    <div class="row">
     <asp:Literal runat="server" ID="DIR" />
+    <div class="row">
     <div class="col-md-3" id="weekDays" runat="server">
         Dni powszednie<br/>
     </div>
@@ -37,8 +37,9 @@
         Niedziele i święta<br/>
     </div>  
     </div>
-    <div class="row">
+    <br/><br/>
     <asp:Literal runat="server" ID="DIR1" />
+    <div class="row">
     <div class="col-md-3" id="weekDays1" runat="server">
         Dni powszednie<br/>
     </div>

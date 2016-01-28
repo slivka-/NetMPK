@@ -11,7 +11,7 @@ namespace NetMPK.MainFunct
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-<<<<<<< HEAD
+
             if (NetMPKGlobalVariables.getInstance().isUserLoggedIn)
             {
                 if (NetMPKGlobalVariables.getInstance().userVerified)
@@ -26,8 +26,8 @@ namespace NetMPK.MainFunct
             else
             {
                 Response.Redirect("~/MainFunct/NotLoggedIn.aspx");
-=======
-            
+
+            }
         }
 
         protected void routeSearchButton_Click(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace NetMPK.MainFunct
             {
                 mainContent.InnerHtml += @"Nie można znaleźć trasy pomiędzy wybranymi przystankami.
                                         Upewnij się, że są poprawne";//ae.Message + "</br>";
->>>>>>> refs/remotes/origin/Pathfinding
+
             }
         }
     }

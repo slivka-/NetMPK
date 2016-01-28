@@ -167,7 +167,7 @@ namespace NetMPK
             return result > 0;
         }
 
-<<<<<<< HEAD
+
         public String getUsersPassword(String Username)
         {
             String query = @"SELECT User_password FROM USERS WHERE Username = '"+Username+@"';";
@@ -208,7 +208,17 @@ namespace NetMPK
             List<String> items = new List<String>();
             String query = @"SELECT Avg_time,Fav_line FROM UserStatistics WHERE Id_user IN(SELECT Id_user FROM USERS WHERE Username = '" + Username + @"');";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
-=======
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+
+                    items.Add(Convert.ToString(rdr["Avg_time"]) + "|" + Convert.ToString(rdr["Fav_line"]));
+                }
+            }
+            return items;
+        }
+
         public int GetStopCount()
         {
             OpenConnection();
@@ -226,30 +236,35 @@ namespace NetMPK
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
             List<int> items = new List<int>();
 
->>>>>>> refs/remotes/origin/Pathfinding
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
                 while (rdr.Read())
                 {
-<<<<<<< HEAD
-                    items.Add(Convert.ToString(rdr["Avg_time"]) +"|"+ Convert.ToString(rdr["Fav_line"]));
-                }
-            }
-            return items;
-        }
-
-        public List<String> getStartingTimes(int linenumber, int direction)
-        {
-            List<String> items = new List<String>();
-            String query = @"SELECT Starting_time,DayWeek FROM LINEDETAILS WHERE Line_number = " + linenumber + @" AND Direction = "+direction+@" ORDER BY Starting_time ASC;";
-            SqlCommand cmd = new SqlCommand(query, sqlConnection);
-=======
                     items.Add(Convert.ToInt32(rdr["Id_stop"]));
                 }
             }
             CloseConnection();
             return items;
         }
+
+
+
+        public List<String> getStartingTimes(int linenumber, int direction)
+        {
+            List<String> items = new List<String>();
+            String query = @"SELECT Starting_time,DayWeek FROM LINEDETAILS WHERE Line_number = " + linenumber + @" AND Direction = "+direction+@" ORDER BY Starting_time ASC;";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                while (rdr.Read())
+                {
+
+                    items.Add(Convert.ToString(rdr["Starting_time"]) + "|" + Convert.ToString(rdr["DayWeek"]));
+                }
+            }
+            return items;
+        }
+
 
         public List<int> GetAllToStopID(int From_stop_id)
         {
@@ -260,17 +275,18 @@ namespace NetMPK
             cmd.Parameters.AddWithValue("@From_stop_id", From_stop_id);
             List<int> items = new List<int>();
 
->>>>>>> refs/remotes/origin/Pathfinding
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
                 while (rdr.Read())
                 {
-<<<<<<< HEAD
-                    items.Add(Convert.ToString(rdr["Starting_time"])+"|"+ Convert.ToString(rdr["DayWeek"]));
+                    items.Add(Convert.ToInt32(rdr["To_stop_id"]));
                 }
             }
+            CloseConnection();
             return items;
         }
+
+
 
         public List<String> getArrivalTime(String stopname,int linenumber,String startTime, int direction)
         {
@@ -287,13 +303,8 @@ namespace NetMPK
             return items;
         }
 
-=======
-                    items.Add(Convert.ToInt32(rdr["To_stop_id"]));
-                }
-            }
-            CloseConnection();
-            return items;
-        }
+
+                   
 
         public int GetTimeFromConnection(int id1, int id2)
         {
@@ -359,6 +370,5 @@ namespace NetMPK
             CloseConnection();
             return result;
         }
->>>>>>> refs/remotes/origin/Pathfinding
     }
 }
