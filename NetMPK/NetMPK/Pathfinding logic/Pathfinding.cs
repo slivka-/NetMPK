@@ -106,7 +106,7 @@ namespace NetMPK
         {
             List<string> result = new List<string>();
             Relax();
-
+            int timeTotal = 0;
             int current = stop;
             while (current != source)
             {
@@ -120,7 +120,9 @@ namespace NetMPK
                 {
                     drugi = idToName[p[current]];
                 }
-                result.Add(drugi + " jedzie na " + pierwszy);
+                int currentTime = connection.GetTimeFromConnection(current, p[current]);
+                timeTotal += currentTime;
+                result.Add(drugi + " jedzie na " + pierwszy + " |czas przejazdu: " + currentTime + " min." + " |linia: " + connection.GetLineFromConnection(current, p[current]));
                 current = p[current];
             }
 
@@ -128,6 +130,8 @@ namespace NetMPK
             for (int i = result.Count - 1; i >= 0; --i)
                 temp.Add(result[i]);
 
+            TimeSpan span = TimeSpan.FromMinutes(timeTotal);
+            temp.Add("Całkowity czas przejazdu: " + span.ToString("hh':'mm"));
             return temp;
         }
     }

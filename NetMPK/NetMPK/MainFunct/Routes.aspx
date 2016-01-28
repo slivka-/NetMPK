@@ -6,23 +6,23 @@
         Wyszukaj połączenie
     </h2>
 
-    <div class="form-group">
+    <div>
         <asp:Label runat="server" CssClass="col-md-2 control-label">Przystanek początkowy</asp:Label>
-        <div class="col-md-10">
-                <asp:TextBox runat="server" ID="sourceStop" CssClass="form-control" />
+        <div>
+                <asp:TextBox runat="server" ID="sourceStop"/>
         </div>
     </div>
-   <div class="form-group">
+   <div >
         <asp:Label runat="server" CssClass="col-md-2 control-label">Przystanek końcowy</asp:Label>
-        <div class="col-md-10">
-                <asp:TextBox runat="server" ID="endStop" CssClass="form-control" />
+        <div>
+                <asp:TextBox runat="server" ID="endStop"/>
         </div>
     </div>
-    <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <asp:Button runat="server" OnClick="routeSearchButton_Click" Text="Znajdź" CssClass="btn btn-default" />
+    <div >
+            <div>
+                <asp:Button runat="server" OnClick="routeSearchButton_Click" Text="Znajdź" />
             </div>
     </div>       
-    <div runat="server" id="mainContent" class="col-md-12"/>
+    <div runat="server" id="mainContent"/>
     
 </asp:Content>

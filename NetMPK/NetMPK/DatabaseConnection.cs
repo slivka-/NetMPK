@@ -253,5 +253,22 @@ namespace NetMPK
             CloseConnection();
             return result > 0;
         }
+
+        public int GetLineFromConnection(int id1, int id2)
+        {
+            OpenConnection();
+            String query = @"SELECT l.Line_number
+                            FROM Line l
+                            JOIN LineConnection lc ON l.Id_line = lc.Id_route
+                            JOIN Connection c ON lc.Id_route = c.Id_route
+                            WHERE (c.From_stop_id = @id1 AND c.To_stop_id = @id2)
+                            OR (c.From_stop_id = @id2 AND c.To_stop_id = @id1);";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@id1", id1);
+            cmd.Parameters.AddWithValue("@id2", id2);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
+        }
     }
 }

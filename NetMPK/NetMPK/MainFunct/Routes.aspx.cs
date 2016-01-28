@@ -22,6 +22,7 @@ namespace NetMPK.MainFunct
             List<string> result;
             try
             {
+                mainContent.InnerHtml = "";
                 result = p.FindConnection(source, end);
                 int counter = 1;
                 foreach (var n in result)
