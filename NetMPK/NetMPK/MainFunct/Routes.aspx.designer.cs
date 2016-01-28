@@ -10,6 +10,37 @@
 namespace NetMPK.MainFunct {
     
     
+<<<<<<< HEAD
     public partial class BLANK {
+=======
+    public partial class Routes {
+        
+        /// <summary>
+        /// sourceStop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox sourceStop;
+        
+        /// <summary>
+        /// endStop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox endStop;
+        
+        /// <summary>
+        /// mainContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mainContent;
+>>>>>>> refs/remotes/origin/Pathfinding
     }
 }

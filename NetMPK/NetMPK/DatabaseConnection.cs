@@ -5,6 +5,7 @@ using System.Web;
 using System.Configuration;
 using System.Web.Configuration;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace NetMPK
 {
@@ -166,6 +167,7 @@ namespace NetMPK
             return result > 0;
         }
 
+<<<<<<< HEAD
         public String getUsersPassword(String Username)
         {
             String query = @"SELECT User_password FROM USERS WHERE Username = '"+Username+@"';";
@@ -206,10 +208,30 @@ namespace NetMPK
             List<String> items = new List<String>();
             String query = @"SELECT Avg_time,Fav_line FROM UserStatistics WHERE Id_user IN(SELECT Id_user FROM USERS WHERE Username = '" + Username + @"');";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
+=======
+        public int GetStopCount()
+        {
+            OpenConnection();
+            String query = @"SELECT COUNT(*) FROM LineStop";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
+        }
+
+        public List<int> GetAllStopsID()
+        {
+            OpenConnection();
+            String query = @"SELECT Id_stop FROM LineStop";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            List<int> items = new List<int>();
+
+>>>>>>> refs/remotes/origin/Pathfinding
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
                 while (rdr.Read())
                 {
+<<<<<<< HEAD
                     items.Add(Convert.ToString(rdr["Avg_time"]) +"|"+ Convert.ToString(rdr["Fav_line"]));
                 }
             }
@@ -221,10 +243,29 @@ namespace NetMPK
             List<String> items = new List<String>();
             String query = @"SELECT Starting_time,DayWeek FROM LINEDETAILS WHERE Line_number = " + linenumber + @" AND Direction = "+direction+@" ORDER BY Starting_time ASC;";
             SqlCommand cmd = new SqlCommand(query, sqlConnection);
+=======
+                    items.Add(Convert.ToInt32(rdr["Id_stop"]));
+                }
+            }
+            CloseConnection();
+            return items;
+        }
+
+        public List<int> GetAllToStopID(int From_stop_id)
+        {
+            OpenConnection();
+            String query = @"SELECT To_stop_id FROM Connection WHERE From_stop_id = @From_stop_id 
+                            AND To_stop_id <> @From_stop_id";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@From_stop_id", From_stop_id);
+            List<int> items = new List<int>();
+
+>>>>>>> refs/remotes/origin/Pathfinding
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
                 while (rdr.Read())
                 {
+<<<<<<< HEAD
                     items.Add(Convert.ToString(rdr["Starting_time"])+"|"+ Convert.ToString(rdr["DayWeek"]));
                 }
             }
@@ -246,5 +287,78 @@ namespace NetMPK
             return items;
         }
 
+=======
+                    items.Add(Convert.ToInt32(rdr["To_stop_id"]));
+                }
+            }
+            CloseConnection();
+            return items;
+        }
+
+        public int GetTimeFromConnection(int id1, int id2)
+        {
+            OpenConnection();
+            String query = @"SELECT Transfer_time FROM Connection
+                            WHERE (From_stop_id = @id1 AND To_stop_id = @id2)
+                            OR (From_stop_id = @id2 AND To_stop_id = @id1);";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@id1", id1);
+            cmd.Parameters.AddWithValue("@id2", id2);
+            DateTime result = DateTime.ParseExact(cmd.ExecuteScalar().ToString(),
+                "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            CloseConnection();
+            return result.Minute;
+        }
+
+        public string GetStopNameFromID(int id)
+        {
+            OpenConnection();
+            String query = @"SELECT Name FROM LineStop WHERE Id_stop = @id";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@id", id);
+            string result = Convert.ToString(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
+        }
+
+        public int GetIDFromStopName(string name)
+        {
+            OpenConnection();
+            String query = @"SELECT Id_stop FROM LineStop WHERE name = @name";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@name", name);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
+        }
+
+        public bool CheckIfExists(string value)
+        {
+            OpenConnection();
+            String query = @"SELECT COUNT(*) FROM LineStop WHERE Name = @value";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@value", value);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result > 0;
+        }
+
+        public int GetLineFromConnection(int id1, int id2)
+        {
+            OpenConnection();
+            String query = @"SELECT l.Line_number
+                            FROM Line l
+                            JOIN LineConnection lc ON l.Id_line = lc.Id_route
+                            JOIN Connection c ON lc.Id_route = c.Id_route
+                            WHERE (c.From_stop_id = @id1 AND c.To_stop_id = @id2)
+                            OR (c.From_stop_id = @id2 AND c.To_stop_id = @id1);";
+            SqlCommand cmd = new SqlCommand(query, sqlConnection);
+            cmd.Parameters.AddWithValue("@id1", id1);
+            cmd.Parameters.AddWithValue("@id2", id2);
+            int result = Convert.ToInt32(cmd.ExecuteScalar());
+            CloseConnection();
+            return result;
+        }
+>>>>>>> refs/remotes/origin/Pathfinding
     }
 }
